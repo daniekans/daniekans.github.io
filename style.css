@@ -1,0 +1,377 @@
+/* Central Cartoon */
+
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  max-width: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+/* menu-lateral */
+
+#menu-lateral {
+  position: fixed;
+  left: -20%;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  background-image: linear-gradient(to right, rgb(25, 25, 25) 90%, black);
+  overflow: hidden;
+  max-height: 100%;
+  opacity: 0;
+}
+
+#menu-lateral, #conteudo, body.menu-ativo #menu-lateral {
+  transition: all 200ms ease;
+}
+
+body.menu-ativo #menu-lateral {
+  left: 0;
+  opacity: 1;
+}
+
+body.menu-ativo #conteudo {
+  left: 20%;
+}
+
+    /*---------*/
+
+#menu-lateral section:not(:last-child) {
+  border-bottom: 3px solid rgb(65, 65, 65);
+}
+
+#menu-lateral section {
+  padding: 7% 5% 5% 5%;
+  text-align: center;
+  transition: all 150ms ease-out;
+}
+
+#menu-lateral img { height: 200px; position: relative;}
+
+#menu-lateral img[alt="Gravity Falls"] {
+  top: -20px;
+  right: 30px;
+}
+
+#menu-lateral .redondo {
+  height: 160px;
+  width: 160px;
+  border: 2px solid darkgrey;
+  border-radius: 50%;
+  overflow: hidden;
+  background-image: radial-gradient(white 60%, silver);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#menu-lateral section span {
+  color: silver;
+  font-size: 120%;
+  margin-top: 4%;
+  max-width: 70%;
+}
+
+#menu-lateral section:hover {
+  transform: scale(1.15);
+  margin-top: 15px;
+}
+/* Classes com fundos para usar com JavaScript
+.section-fundo-laranja { background-color: rgba(250, 157, 0, 0.63); }
+.section-fundo-rosa { background-color: rgba(255, 18, 61, 0.46); }
+.section-fundo-azul { background-color: rgba(73, 111, 210, 0.54); }
+*/
+
+.gravity-falls:hover { background-color: rgba(250, 157, 0, 0.63); }
+.steven-universe:hover { background-color: rgba(255, 18, 61, 0.46); }      /* fundos */
+.svtfoe:hover { background-color: rgba(73, 111, 210, 0.54); }
+
+#btmenu, #menu-lateral section {
+  cursor: pointer;
+}
+
+/* header */
+
+#imgsheader, #imgsheader img {
+  position: absolute;
+}
+
+#imgsheader {
+  margin-right: 2%;
+  right: 0;
+}
+
+#imgsheader #imgGF { width: 120px; right: 600px; top: -70px}
+
+#imgsheader #imgSU { width: 250px; right: 250px; top: -40px;}
+
+#imgsheader #imgSVTFOE { height: 160px; right: 0px; top: -60px;}
+
+header {
+  padding: 2% 2% 0 2%;
+  box-shadow: 0px 0px 10px 0px grey;
+  background-image: linear-gradient(to top, rgb(244, 244, 244) 90%, rgb(231, 231, 231));
+  position: relative;
+  z-index: 4;
+}
+
+header #titulo-pagina .icone-pagina {
+  font-size: 40px;
+  transform: rotate(-45deg);
+  background-image: linear-gradient(to top, #e21212 20%, #ff6565);
+  padding: 0.5%;
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  animation: balancando .8s ease-in-out 0s infinite alternate;
+}
+
+header #titulo-pagina h1 {
+  transition: all 200ms ease;
+}
+
+header #titulo-pagina h1:hover {
+  opacity: 0.6;
+}
+
+@keyframes balancando {
+  from  { transform: rotate(-47deg); }
+  to    { transform: rotate(-43deg); }
+}
+
+.icone-pagina span {
+  transform: rotate(45deg);
+  color: white;
+  top: 1px;
+  right: 6px;
+}
+
+#titulo-pagina, #titulo-pagina a:visited {
+  padding-bottom: 1%;
+  margin-left: 30px;
+  color: inherit;
+}
+
+header h1 {
+  left: 2%;
+}
+
+header h1, .icone-pagina, .icone-pagina span, header li, #menu-lateral section span {
+  font-family: 'Arvo', serif;
+  display: inline-block;
+  position: relative;
+}
+
+#menu-de-navegacao {
+  min-width: 100%;
+  transition: all 200ms ease;
+}
+
+.fixo {
+  position: fixed;
+  top: 0;
+  left: -2px;
+  box-shadow: 0px 0px 10px 0px grey;
+}
+
+.fixo ul {
+  padding-left: 2%;
+  width: 100%;
+  margin-left: 0.2%;
+}
+
+body.menu-ativo .fixo { left: 250px; }
+
+header ul {
+  margin: 0;
+  font-size: 20px;
+  color: rgb(110, 110, 110);
+  background-color: rgb(244, 244, 244);
+  padding: 1% 0;
+  top: 0px;
+  white-space: nowrap;
+  overflow-x: overlay;
+}
+
+header li {
+  list-style: none;
+  margin: auto 1%;
+  padding: 0 2%;
+}
+
+@keyframes sobe-desce-link {
+  from { bottom: 0; }
+  to { bottom: 5px; }
+}
+
+header li:hover {
+  animation: sobe-desce-link 1s ease-in-out 0s alternate infinite;
+  font-weight: bold;
+  color: indianred;
+}
+
+header li a, header li a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+header li:nth-child(2n+1) {
+  border-left: 2px solid silver;
+  border-right: 2px solid silver;
+}
+
+.fundo-laranja header #titulo-pagina { color: rgb(255, 192, 70) }
+.fundo-rosa header #titulo-pagina {color: rgb(255, 116, 141) }
+.fundo-azul header #titulo-pagina {color: rgb(107, 161, 252) }
+
+/* main */
+
+  #conteudo {
+    background-color: rgb(255, 248, 87);
+    position: relative;
+    left: 0;
+    font-family: 'Work Sans', 'Arial', sans-serif;
+  }
+
+  .rolando {
+    animation: rolando 5s ease-in-out 0s;
+  }
+
+  @keyframes rolando {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+  }
+
+  /*-----------*/
+
+::-webkit-scrollbar {
+  background: #f2f2f2;
+  width: 0.7%;
+}
+
+ul::-webkit-scrollbar { max-height: 15%; }
+
+::-webkit-scrollbar-thumb { background-color: indianred; }
+
+#conteudo .container, #conteudo.container {
+  background-color: rgb(245, 245, 245);
+}
+#conteudo .fundo-laranja, #conteudo.fundo-laranja {
+  background-color: rgb(255, 192, 70);
+  cursor: url(../imgs/bill-cipher.cur), default;
+}
+#conteudo .fundo-rosa, #conteudo.fundo-rosa {
+  background-color: rgb(255, 116, 141);
+  cursor: url(../imgs/sapphire-gem.cur), default;
+ }
+#conteudo .fundo-azul, #conteudo.fundo-azul {
+  background-color: rgb(107, 161, 252);
+  cursor: url(../imgs/starbutterwand.cur), default;
+ }
+
+.container, article.fundo-laranja, article.fundo-rosa, article.fundo-azul {
+  padding: 3%;
+  margin-bottom: 5%;
+  border-radius: 10px;
+}
+
+.container {
+  box-shadow: 2px 2px 6px rgb(89, 89, 89);
+  border-radius: 0;
+}
+
+main, .container > *, article.fundo-laranja > *, article.fundo-rosa > *, article.fundo-azul > * {
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 2%;
+  border-radius: 5%;
+}
+
+main {
+  margin: 1% 7%;
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 1% 7%;
+  display: grid;
+}
+
+main > h1 {
+  text-align: center;
+  font-size: 300%;
+  font-family: 'Arvo', serif;
+}
+
+main article:hover {
+  position: relative;
+  animation: sobe-desce 1s ease-in-out 0s infinite alternate;
+}
+
+/* footer */
+
+footer {
+  background-image: linear-gradient(to bottom, rgb(55, 55, 55) 80%, black);
+  color: rgb(252, 196, 208);
+  font-family: 'Arvo', serif;
+  font-size: 120%;
+  text-align: center;
+  text-shadow: 2px 2px black;
+  padding: 4% 2%;
+  position: relative;
+  margin: 0;
+  overflow-y: hidden;
+}
+
+footer span {
+  color: rgb(159, 159, 159);
+  text-shadow: none;
+}
+
+footer a {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  bottom: 0;
+}
+
+footer a:hover {
+  padding: 0.5%;
+  border-radius: 10px;
+  background-color: rgb(33, 33, 33);
+  bottom: 5px;
+}
+
+footer .legal { font-size: 60%; }
+
+footer img { position: absolute; margin: 0; bottom: 0;}
+
+@keyframes sobe-desce {
+  from { bottom: 0; }
+  to { bottom: 10px; }
+}
+
+main article:hover, footer img:hover { animation: sobe-desce 1s ease-in-out 0s infinite alternate; }
+
+footer img[src*="garnet"] {
+  left: -30px;
+  width: 30%;
+}
+
+footer img[src*="star"] {
+  right: 0;
+  width: 25%;
+}
+
+footer button#barrel-roll {
+  background-color: transparent;
+  border: 0;
+  color: silver;
+  margin: 2% 0 0 0;
+  cursor: pointer;
+}
+
+footer button#barrel-roll:hover {
+  color: white;
+}
