@@ -261,17 +261,20 @@ ul::-webkit-scrollbar { max-height: 15%; }
 #conteudo .container, #conteudo.container {
   background-color: rgb(245, 245, 245);
 }
+
 #conteudo .fundo-laranja, #conteudo.fundo-laranja {
   background-color: rgb(255, 192, 70);
-  cursor: url(../imgs/bill-cipher.cur), default;
+  cursor: url(imgs/bill-cipher.cur), default;
 }
+
 #conteudo .fundo-rosa, #conteudo.fundo-rosa {
   background-color: rgb(255, 116, 141);
-  cursor: url(../imgs/sapphire-gem.cur), default;
+  cursor: url(imgs/sapphire-gem.cur), default;
  }
+
 #conteudo .fundo-azul, #conteudo.fundo-azul {
   background-color: rgb(107, 161, 252);
-  cursor: url(../imgs/starbutterwand.cur), default;
+  cursor: url(imgs/starbutterwand.cur), default;
  }
 
 .container, article.fundo-laranja, article.fundo-rosa, article.fundo-azul {
