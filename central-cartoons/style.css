@@ -25,6 +25,7 @@ body {
   overflow: hidden;
   max-height: 100%;
   opacity: 0;
+  overflow-y: auto;
 }
 
 #menu-lateral, #conteudo, body.menu-ativo #menu-lateral {
@@ -81,6 +82,28 @@ body.menu-ativo #conteudo {
   transform: scale(1.15);
   margin-top: 15px;
 }
+
+#menu-lateral .transp1, #menu-lateral .transp2 {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+#menu-lateral .transp1 { top: 0; bottom: 95%; }
+
+#menu-lateral .transp2 { top: 95%; bottom: 0; }
+
+#menu-lateral.topo {
+  top: 0;
+  bottom: auto;
+}
+
+#menu-lateral.fim {
+  top: auto;
+  bottom: 0;
+}
+
 /* Classes com fundos para usar com JavaScript
 .section-fundo-laranja { background-color: rgba(250, 157, 0, 0.63); }
 .section-fundo-rosa { background-color: rgba(255, 18, 61, 0.46); }
@@ -182,10 +205,9 @@ header h1, .icone-pagina, .icone-pagina span, header li, #menu-lateral section s
 .fixo ul {
   padding-left: 2%;
   width: 100%;
-  margin-left: 0.2%;
 }
 
-body.menu-ativo .fixo { left: 250px; }
+body.menu-ativo .fixo { left: 20% ; }
 
 header ul {
   margin: 0;
@@ -307,7 +329,7 @@ main > h1 {
   font-family: 'Arvo', serif;
 }
 
-main article:hover {
+main article[class*="fundo"]:hover {
   position: relative;
   animation: sobe-desce 1s ease-in-out 0s infinite alternate;
 }

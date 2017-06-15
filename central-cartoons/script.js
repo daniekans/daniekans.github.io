@@ -49,7 +49,7 @@ menusectionEl.forEach(function(el) {
 });
 */
 
-function rolar() {
+function BarrelRoll() {
   if(bodyEl.classList.toggle('rolando'))
     botaoRolarEl.innerHTML = 'Parar Execução';
   else
@@ -57,6 +57,39 @@ function rolar() {
 }
 
 let botaoRolarEl = document.querySelector('#barrel-roll');
-botaoRolarEl.addEventListener('click', rolar);
+botaoRolarEl.addEventListener('click', BarrelRoll);
 
 /*  */
+
+let i = -1, tempo = 1, tamanho = 1000, t, tempEl, mesmoel;
+let menulateralEl = document.querySelector('#menu-lateral');
+
+function RolarCima(evt) {
+  if(i === -1)
+    tempEl = evt.currentTarget;
+  menulateralEl.scrollTop = i--;
+  t = setTimeout(RolarCima, tempo);
+  if(i === tamanho || i < 0) i = 0;
+}
+
+function RolarBaixo(evt) {
+  if(i === -1)
+    tempEl = evt.currentTarget;
+  menulateralEl.scrollTop = i++;
+  t = setTimeout(RolarBaixo, tempo);
+  if(i <= 0) i = 0;
+}
+
+function Parar() {
+  clearTimeout(t);
+}
+
+let menusectionEl = document.querySelectorAll('#menu-lateral > div');
+menusectionEl.forEach(function(el) {
+  if(el.classList.contains('transp1'))
+    el.addEventListener('mouseover', RolarCima);
+  else
+    el.addEventListener('mouseover', RolarBaixo);
+
+  el.addEventListener('mouseout', Parar);
+});
