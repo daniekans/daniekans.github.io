@@ -45,28 +45,75 @@
 
     <div id="conteudo">
       <header>
-        <span id="imgsheader">
-          <img id="imgGF" src="imgs/dipper-e-mabel.png" alt="Dipper e Mabel">
-          <img id="imgSU" src="imgs/crystal-gems-1.png" alt="Crystal Gems">
-          <img id="imgSVTFOE" src="imgs/star-e-marco.png" alt="">
-        </span>
-        <div id="titulo-pagina">
-          <a href="index.html">
-            <span class="icone-pagina"><span>CC</span></span><h1>Central Cartoons</h1>
-          </a>
+        <div id="main_header">
+          <span id="imgsheader">
+            <img id="imgGF" src="imgs/dipper-e-mabel.png" alt="Dipper e Mabel">
+            <img id="imgSU" src="imgs/crystal-gems-1.png" alt="Crystal Gems">
+            <img id="imgSVTFOE" src="imgs/star-e-marco.png" alt="">
+          </span>
+          <div id="titulo-pagina">
+            <a href="index.html">
+              <span class="icone-pagina"><span>CC</span></span><h1>Central Cartoons</h1>
+            </a>
+          </div>
         </div>
         <nav id="menu-de-navegacao">
           <ul>
             <li><span id="btmenu">Cartoons</span></li>
-            <li><a href="sites/.html">Teorias</a></li>
-            <li><a href="sites/.html">Episódios</a></li>
-            <li><a href="sites/.html">Músicas</a></li>
-            <li><a href="sites/.html">Fanarts</a></li>
-            <li><a href="sites/.html">Outros Links</a></li>
-            <li><a href="sites/.html">Sobre</a></li>
+            <li class="teorias"><a href="sites/.html">Teorias</a></li>
+            <li class="episodios"><a href="sites/.html">Episódios</a></li>
+            <li class="musicas"><a href="sites/.html">Músicas</a></li>
+            <li class="fanarts"><a href="sites/.html">Fanarts</a></li>
+            <li class="outros-links"><a href="sites/.html">Outros Links</a></li>
+            <li class="sobre"><a href="sites/.html">Sobre</a></li>
           </ul>
         </nav>
       </header>
+
+      <div id="info_hover">
+      <!-- Esta div agrupa o conteudo que será mostrado
+      ao passar o cursor do mouse nos <li> do #menu-de-navegacao -->
+        <div class="teorias">
+          <img src="imgs/stan-pensando.png" alt="Stan pensando em algo profundo">
+          <h1>Teorias de:</h1>
+          <ul>
+            <li><a href="sites/gf-teorias.html">> Gravity Falls</a></li>
+            <li><a href="sites/su-teorias.html">> Steven Universe</a></li>
+            <li><a href="sites/svtfoe-teorias.html">> Star vs As Forças do Mal</a></li>
+          </ul>
+        </div>
+        <div class="episodios">
+          <img src="imgs/nachos.jpeg" alt="">
+          <h1>Episódios de:</h1>
+          <ul>
+            <li><a href="sites/gf-episodios.html">> Gravity Falls</a><span class="info">Todos os Episódios</span></li>
+            <li><a href="sites/su-episodios.html">> Steven Universe</a><span class="info">Até o momento</span></li>
+            <li><a href="sites/svtfoe-episodios.html">> Star vs As Forças do Mal</a><span class="info">Até o momento</span></li>
+          </ul>
+        </div>
+        <div class="musicas">
+          <img src="imgs/good-time-dance.gif" alt="">
+          <h1>Músicas de:</h1>
+          <ul>
+            <li><a href="sites/gf-musicas.html">> Gravity Falls</a></li>
+            <li><a href="sites/su-musicas.html">> Steven Universe</a></li>
+            <li><a href="sites/svtfoe-musicas.html">> Star vs As Forças do Mal</a></li>
+          </ul>
+        </div>
+        <div class="fanarts">
+          <img src="imgs/centipoda-e-steven.jpg" alt="">
+          <h1>Fanarts:</h1>
+          <ul>
+            <li><a href="sites/.html">> </a></li>
+            <li><a href="sites/.html">> </a></li>
+            <li><a href="sites/.html">> </a></li>
+          </ul>
+        </div>
+        <div class="outros-links">
+          <img src="imgs/diarios.png" alt="">
+          <h1>Outros Links:</h1>
+        </div>
+      </div>
 
       <main>
         <h1>- Página Inicial -</h1>
@@ -78,21 +125,24 @@
         <h2>Cartoons:</h2>
         <article class="fundo-laranja">
           <h2>Gravity Falls</h2>
-          <figure>
-            <!-- img aqui -->
-          </figure>
+          <div>
+            <img src="imgs/gf-introducing.jpg" alt="Gravity Falls">
+            <p>...</p>
+          </div>
         </article>
         <article class="fundo-rosa">
           <h2>Steven Universe</h2>
-          <figure>
-            <!-- img aqui -->
-          </figure>
+          <div>
+            <img src="imgs/su-introducing.png" alt="">
+            <p>...</p>
+          </div>
         </article>
         <article class="fundo-azul">
           <h2>Star vs As Forças do Mal</h2>
-          <figure>
-            <!-- img aqui -->
-          </figure>
+          <div>
+            <img src="imgs/svtfoe-introducing.jpg" alt="">
+            <p>...</p>
+          </div>
         </article>
       </main>
 

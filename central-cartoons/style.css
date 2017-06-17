@@ -41,6 +41,20 @@ body.menu-ativo #conteudo {
   left: 20%;
 }
 
+@media screen and (max-width: 800px), screen and (device-aspect-ratio: 9/16) {
+
+  #menu-lateral {
+    left: -60%;
+    width: 60%;
+  }
+
+  body.menu-ativo #conteudo {
+    left: 60%;
+  }
+
+}
+
+
     /*---------*/
 
 #menu-lateral section:not(:last-child) {
@@ -118,7 +132,9 @@ body.menu-ativo #conteudo {
   cursor: pointer;
 }
 
-/* header */
+/*
+* header e #info_hover
+*/
 
 #imgsheader, #imgsheader img {
   position: absolute;
@@ -214,16 +230,18 @@ header ul {
   font-size: 20px;
   color: rgb(110, 110, 110);
   background-color: rgb(244, 244, 244);
-  padding: 1% 0;
+  padding: 0.5em 0;
   top: 0px;
   white-space: nowrap;
   overflow-x: overlay;
+  text-align: center;
 }
 
 header li {
   list-style: none;
   margin: auto 1%;
   padding: 0 2%;
+  overflow-y: hidden;
 }
 
 @keyframes sobe-desce-link {
@@ -231,10 +249,14 @@ header li {
   to { bottom: 5px; }
 }
 
-header li:hover {
+header li:first-child:hover {
   animation: sobe-desce-link 1s ease-in-out 0s alternate infinite;
   font-weight: bold;
   color: indianred;
+}
+
+header li:not(:first-child):hover, #info_hover > div ul a:hover {
+  text-decoration: underline;
 }
 
 header li a, header li a:visited {
@@ -251,25 +273,101 @@ header li:nth-child(2n+1) {
 .fundo-rosa header #titulo-pagina {color: rgb(255, 116, 141) }
 .fundo-azul header #titulo-pagina {color: rgb(107, 161, 252) }
 
-/* main */
+    /*--------------*/
 
-  #conteudo {
-    background-color: rgb(255, 248, 87);
-    position: relative;
-    left: 0;
-    font-family: 'Work Sans', 'Arial', sans-serif;
-  }
+#info_hover > div {
+  display: none;
+  position: absolute;
+  background-color: white;
+  left: 10%;
+  right: 10%;
+  padding: 4% 3%;
+  border: 5px solid rgb(237, 237, 237);
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  animation: desvanece 150ms linear;
+  z-index: 2;
+}
 
-  .rolando {
-    animation: rolando 5s ease-in-out 0s;
-  }
+#info_hover > div img {
+  float: left;
+  width: 50%;
+  margin-right: 5%;
+}
 
-  @keyframes rolando {
-    from { transform: rotate(360deg); }
-    to { transform: rotate(0deg); }
-  }
+#info_hover > div.visivel { display: block; }
+
+@keyframes desvanece {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#info_hover > div.fixo {
+  top: 3em;
+  box-shadow: none;
+  position: fixed;  /* Nao aceita sem isso... */
+}
+
+#info_hover > div ul li {
+  list-style-type: none;
+  font-size: 120%;
+  margin: 3% 0;
+}
+
+#info_hover > div ul a {
+  text-decoration: inherit;
+  color: inherit;
+  display: inline-block;
+  transition: all 100ms ease-in;
+}
+
+span.info {
+  color: indianred;
+  font-style: italic;
+  font-size: 80%;
+  float: right;
+}
+
+#info_hover > div ul a:hover {
+  transform: scale(1.1);
+  background-color: rgba(251, 40, 19, 0.62);
+  color: white;
+  padding: 0.5%;
+  border-radius: 0.3em;
+}
+
+body.menu-ativo #info_hover > div {
+  left: 30%;
+}
+
+/*
+ *  main e #conteudo
+ */
+
+
+#conteudo {
+  background-color: rgb(255, 248, 87);
+  position: relative;
+  left: 0;
+  font-family: 'Work Sans', 'Arial', sans-serif;
+}
+
+.rolando {
+  animation: rolando 5s ease-in-out 0s;
+}
+
+@keyframes rolando {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
 
   /*-----------*/
+
+::selection {
+  background-color: indianred ;
+  color: white;
+
+}
 
 ::-webkit-scrollbar {
   background: #f2f2f2;
@@ -303,6 +401,7 @@ ul::-webkit-scrollbar { max-height: 15%; }
   padding: 3%;
   margin-bottom: 5%;
   border-radius: 10px;
+  clear: both;
 }
 
 .container {
@@ -313,7 +412,7 @@ ul::-webkit-scrollbar { max-height: 15%; }
 main, .container > *, article.fundo-laranja > *, article.fundo-rosa > *, article.fundo-azul > * {
   background-color: rgba(0, 0, 0, 0.03);
   padding: 2%;
-  border-radius: 5%;
+  border-radius: 0.5em;
 }
 
 main {
@@ -329,10 +428,22 @@ main > h1 {
   font-family: 'Arvo', serif;
 }
 
-main article[class*="fundo"]:hover {
+main article[class*="fundo"] h2:hover {
   position: relative;
   animation: sobe-desce 1s ease-in-out 0s infinite alternate;
 }
+
+main article:nth-child(2n) img {
+  width: 60%;
+  float: left;
+}
+
+main article:nth-child(2n+1) img {
+  width: 40%;
+  float: right;
+}
+
+main article p { text-align: justify; }
 
 /* footer */
 
@@ -377,7 +488,7 @@ footer img { position: absolute; margin: 0; bottom: 0;}
   to { bottom: 10px; }
 }
 
-main article:hover, footer img:hover { animation: sobe-desce 1s ease-in-out 0s infinite alternate; }
+main article:hover { animation: sobe-desce 1s ease-in-out 0s infinite alternate; }
 
 footer img[src*="garnet"] {
   left: -30px;
