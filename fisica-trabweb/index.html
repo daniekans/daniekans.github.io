@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Física</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="icon" href="imgs/atomo.ico">
+  </head>
+  <body>
+
+    <header>
+      <div id="topo">
+        <img src="imgs/planeta-header.png" alt="">
+        <h1>F Í S I C A</h1>
+        <h2>Newton e a Gravitação Universal</h2>
+      </div>
+      <nav id="menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gravidade.html">O que é Gravidade?</a></li>
+          <li><a href="isaac-newton.html">Quem é Newton?</a></li>
+          <li><a href=".html">Experimentos</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div id="conteudo-home" class="conteudo">
+      <aside class="widget">
+        <h1>Calcule o seu peso em outros planetas!</h1>
+        <img src="imgs/modelo-heliocentrico.jpg" alt="">
+        <div id="div-planetas">
+          <label for="planetas">Planeta: </label>
+          <select id="planetas">
+            <optgroup label="Planetas">
+              <option value="">Selecione</option>
+              <option value="mercurio">Mercúrio</option>
+              <option value="venus">Vênus</option>
+              <option value="terra">Terra</option>
+              <option value="marte">Marte</option>
+              <option value="jupiter">Júpiter</option>
+              <option value="saturno">Saturno</option>
+              <option value="urano">Urano</option>
+              <option value="netuno">Netuno</option>
+            </optgroup>
+            <optgroup label="Outros">
+              <option value="plutao">Plutão</option>
+              <option value="lua">Lua Terrestre</option>
+              <option value="sol">Sol</option>
+            </optgroup>
+          </select>
+          <div>
+            <label for="massa">Massa (Kg):</label>
+            <input id="massa" type="number" step="10" min="0">
+          </div>
+          <button id="calc-peso" type="button">Calcular</button>
+          <hr>
+          <div id="div-peso">
+            <label for="peso">Peso na superfície:<label>
+            <input id="peso" type="text" disabled>
+          </div>
+        </div>
+      </aside>
+      <main>
+        <h1>PÁGINA PRINCIPAL</h1>
+        <article class="bloco">
+          <img src="imgs/gravidade.jpg" alt="">
+          <div>
+            <h2>O que é Gravidade?</h2>
+            <p>Descubra mais a respeito dos efeitos gravitacionais do universo</p>
+            <a href="gravidade.html">Clique aqui para ver mais</a>
+          </div>
+        </article>
+        <article class="bloco">
+          <img src="imgs/isaac-newton.jpg" alt="">
+          <div>
+            <h2>Quem é Isaac Newton?</h2>
+            <p>Veja mais sobre a história do físico Isaac Newton, muito importante para o desenvolvimento dos estudos sobre a gravidade</p>
+            <a href="isaac-newton.html">Clique aqui para ver mais</a>
+          </div>
+        </article>
+        <article class="bloco">
+          <img src="imgs/relatividade.jpg" alt="">
+          <div>
+            <h2>Experimentos sobre a Gravitação</h2>
+            <p>Diversos experimentos foram feitos para tentar provar as teorias da Gravitação Universal</p>
+            <a href="experimentos.html">Clique aqui para ver mais</a>
+          </div>
+        </article>
+        <div class="clear"></div>
+      </main>
+    </div>
+
+    <footer>
+      <p>Insira algo aqui</p>
+      <p><a href="#topo">Voltar ao Topo</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+
+  </body>
+</html>
