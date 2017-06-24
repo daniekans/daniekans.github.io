@@ -29,16 +29,13 @@ function getGravidade(val) {
   return g;
 }
 
-let botaoEl = document.querySelector('#calc-peso');
-
-// selectEl.addEventListener('change', function() {
-//   alert('A gravidade no planeta selecionado é ' + getGravidade(this.value));
-// });
 
 // Indicar mudança da gravidade
 
+let botaoEl = document.querySelector('#calc-peso');
+let selectEl = document.querySelector('select#planetas');
+
 botaoEl.addEventListener('click', function() {
-  let selectEl = document.querySelector('select#planetas');
   let massaEl = document.querySelector('#massa');
   let pesoEl = document.querySelector('#peso');
 
@@ -51,3 +48,7 @@ botaoEl.addEventListener('click', function() {
     peso.value = 'Massa Negativa';
   }
 })
+
+selectEl.addEventListener('change', function() {
+  document.querySelector('#div-planetas .mostra-g').innerHTML = ('A gravidade no corpo celeste selecionado é de ' + getGravidade(this.value) + ' m/s²');
+});

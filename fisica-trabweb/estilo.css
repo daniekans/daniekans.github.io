@@ -81,10 +81,15 @@ header li:hover {
   color: #2c70a0;
 }
 
-/* ---- #conteudo ----*/
+/* ---- Conteúdo ----*/
 
-#conteudo-home {
-  background-image: url('imgs/galaxia.jpg');  /* editar imagem depois*/
+#conteudo {
+  background-color: white;
+}
+
+
+#conteudo.home {
+  background-image: url('imgs/galaxia.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -108,11 +113,12 @@ aside.widget {
   max-width: 20%;
   float: right;
   color: white;
-  background-color: rgb(60, 60, 60);
+  background-color: rgb(219, 137, 27);
   box-sizing: border-box;
   padding: 3% 1%;
   border-radius: 0.5em;
   margin: 2%;
+  z-index: 2;
 }
 
 aside.widget #div-planetas {
@@ -133,6 +139,10 @@ aside.widget #div-planetas {
 
 #div-planetas select option[value=""] {
   display: none;
+}
+
+#div-planetas span.mostra-g {
+  color: #2c70a0;
 }
 
 #div-planetas button {
@@ -167,11 +177,11 @@ aside.widget #div-planetas {
   border-radius: 4px;
 }
 
-header h1, main > h1, .widget > h1 {
+header h1, main > h1, main > div.titulo h1, .widget > h1 {
   margin: 0;
 }
 
-main > h1 {
+main > h1, main div.titulo h1 {
   background-image: linear-gradient(to bottom, lightgrey 10%, white);
   color: black;
   text-align: center;
@@ -179,6 +189,24 @@ main > h1 {
   padding: 5%;
   border-bottom-right-radius: 50%;
   border-bottom-left-radius: 50%;
+}
+
+main > div.titulo h1 {
+  background-image: linear-gradient(to bottom, black, rgb(16, 19, 36));
+  color: white;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
+main > div.titulo * {
+  max-width: 100%;
+}
+
+main > div.titulo {
+  box-sizing: border-box;
+  max-width: 100%;
+  position: relative;
 }
 
 main article.bloco {
@@ -208,6 +236,13 @@ main article.bloco:nth-child(2n) {
 
 main article.bloco:nth-child(2n+1) {
   float: right;
+}
+
+main img[src*="tirinha"] {
+  float: right;
+  /*margin-right: 10%;
+  margin-bottom: 5%;*/
+  margin: 0 5% 5% 3%;
 }
 
 .clear{ clear: both; color: white; }
