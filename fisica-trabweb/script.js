@@ -5,24 +5,15 @@ function getGravidade(val) {
 
   switch (val) {
     case 'mercurio':
-    case 'marte': g = 3.7;
-      break;
-    case 'venus': g = 8.9;
-      break;
-    case 'terra': g = 9.8;
-      break;
-    case 'jupiter': g = 24.7;
-      break;
-    case 'saturno': g = 10.4;
-      break;
-    case 'urano': g = 8.7;
-      break;
-    case 'netuno': g = 11.15;
-      break;
-    case 'plutao': g = 0.6;
-      break;
-    case 'lua': g = 1.62;
-      break;
+    case 'marte': g = 3.7; break;
+    case 'venus': g = 8.9; break;
+    case 'terra': g = 9.8; break;
+    case 'jupiter': g = 24.7; break;
+    case 'saturno': g = 10.4; break;
+    case 'urano': g = 8.7; break;
+    case 'netuno': g = 11.15; break;
+    case 'plutao': g = 0.6; break;
+    case 'lua': g = 1.62; break;
     case 'sol': g = 274;
   }
 
