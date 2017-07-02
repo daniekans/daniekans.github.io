@@ -78,7 +78,7 @@ a {
   transition: all 100ms linear;
 }
 
-header li:hover {
+header li:hover, footer a[href*="sobre"]:hover {
   background-color: white;
   color: #2c70a0;
 }
@@ -87,13 +87,16 @@ header li:hover {
 
 #conteudo {
   background-color: white;
+  background-size: cover;
+  background-position: center;
 }
-
 
 #conteudo.home {
   background-image: url('imgs/galaxia.jpg');
-  background-size: cover;
-  background-position: center;
+}
+
+#conteudo.sobre {
+  background-image: url('imgs/espaco-bw.jpg');
 }
 
 main, .widget {
@@ -279,9 +282,19 @@ footer {
 
 footer a {
   position: relative;
-  transition: all 500ms ease-out;
+  transition: all 200ms ease-out;
 }
 
-footer a:hover::after {
-  content: " ^"
+footer a[href="#topo"]:hover::after {
+  content: " ^";
+  color: orange;
+}
+
+footer a[href*="sobre"] {
+  padding: 1%;
+  border: 1px solid darkgrey;
+  display: block;
+  margin: 0 auto;
+  max-width: 10%;
+  text-align: center;
 }
