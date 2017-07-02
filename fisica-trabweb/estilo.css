@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+@import url('https://fonts.googleapis.com/css?family=Catamaran');
 
 body, html {
   max-height: 100%;
@@ -42,6 +43,7 @@ header #topo h1 {
 }
 
 header #topo h2 {
+  font-family: 'Catamaran', sans-serif;
   font-weight: normal;
   font-variant-caps: petite-caps;
 }
@@ -203,6 +205,10 @@ main > div.titulo * {
   max-width: 100%;
 }
 
+main > div.titulo img[src*="experimentos"] {
+  min-width: 100%;
+}
+
 main > div.titulo {
   box-sizing: border-box;
   max-width: 100%;
@@ -240,12 +246,28 @@ main article.bloco:nth-child(2n+1) {
 
 main img[src*="tirinha"] {
   float: right;
-  /*margin-right: 10%;
-  margin-bottom: 5%;*/
+  /*
+   * margin-right: 10%;
+   * margin-bottom: 5%;
+   */
   margin: 0 5% 5% 3%;
 }
 
 .clear{ clear: both; color: white; }
+
+/*---------------------*/
+
+video {
+  display: block;
+  margin: 5% auto;
+  border: 2em solid rgb(219, 137, 27);
+  background-image: url('imgs/espaco-bw.jpg');
+  min-height: 300px;
+}
+
+video ~ p {
+  margin: 2% 10%;
+}
 
 /* ---- footer ---- */
 
