@@ -208,7 +208,7 @@ main > div.titulo * {
   max-width: 100%;
 }
 
-main > div.titulo img[src*="experimentos"] {
+main > div.titulo img {
   min-width: 100%;
 }
 
