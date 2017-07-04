@@ -26,6 +26,17 @@ function getGravidade(val) {
 let botaoEl = document.querySelector('#calc-peso');
 let selectEl = document.querySelector('select#planetas');
 
+if((location.pathname.indexOf('exp') !== -1) && (location.pathname.length < 12)) {
+  let btExpEl = document.createElement('BUTTON');
+  let prox = document.createTextNode('Próximo');
+  btExpEl.appendChild(prox);
+  document.querySelector('body').appendChild(btExpEl);
+  btExpEl.addEventListener('click', function() {
+    let x = parseFloat(location.pathname);
+    location.pathname = '/exp' + String(((parseInt(location.pathname)) += 1)) + '.html';
+  });
+}
+
 botaoEl.addEventListener('click', function() {
   let massaEl = document.querySelector('#massa');
   let pesoEl = document.querySelector('#peso');
