@@ -43,7 +43,7 @@ if(botaoEl && selectEl) {
 
 // Teste...
 
-if((location.pathname.indexOf('exp') !== -1) && (location.pathname.length < 12)) {
+if((location.pathname.indexOf('exp') !== -1) && (location.pathname.length < 27)) {
   let footerEl = document.querySelector('footer');
   let btAntEl = document.createElement('BUTTON');
   let btProxEl = document.createElement('BUTTON');
