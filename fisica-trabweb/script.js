@@ -1,4 +1,4 @@
-// Cálculo do peso em outros planetas
+// Objeto com o valor das gravidades dos planetas
 
 const gravidades = {
   mercurio: 3.7,
@@ -53,16 +53,16 @@ if((location.pathname.indexOf('exp') !== -1) && (location.pathname.length < 12))
   footerEl.appendChild(btAntEl);
   footerEl.appendChild(btProxEl);
 
-  let x = parseInt(location.pathname.replace('/exp', ''));
+  let x = parseInt(location.pathname.replace('/fisica-trabweb/exp', ''));
   if(x !== 16)
     btProxEl.addEventListener('click', function() {
-    location.pathname = '/exp' + String(++x) + '.html';
+    location.pathname = 'fisica-trabweb/exp' + String(++x) + '.html';
   });
   else
     btProxEl.style.backgroundColor = 'darkred';
   if(x !== 1)
     btAntEl.addEventListener('click', function() {
-      location.pathname = '/exp' + String(--x) + '.html';
+      location.pathname = 'fisica-trabweb/exp' + String(--x) + '.html';
     });
   else
     btAntEl.style.backgroundColor = 'darkred';
