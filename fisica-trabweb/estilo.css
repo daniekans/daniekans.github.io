@@ -39,6 +39,7 @@ header #topo img {
 }
 
 header #topo h1 {
+  letter-spacing: 10px;
   font-size: 300%;
 }
 
@@ -78,7 +79,7 @@ a {
   transition: all 100ms linear;
 }
 
-header li:hover, footer a[href*="sobre"]:hover {
+header li:hover, footer a[href*="sobre"]:hover, footer button:hover {
   background-color: white;
   color: #2c70a0;
 }
@@ -249,12 +250,18 @@ main article.bloco:nth-child(2n+1) {
 
 main img[src*="tirinha"] {
   float: right;
-  /*
-   * margin-right: 10%;
-   * margin-bottom: 5%;
-   */
   margin: 0 5% 5% 3%;
 }
+
+iframe {
+  padding-top: 10px;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: 150px;
+}
+
+p { text-align: justify; }
 
 .clear{ clear: both; color: white; }
 
@@ -278,9 +285,10 @@ footer {
   background-color: rgb(60, 60, 60);
   padding: 3%;
   color: white;
+  text-align: center;
 }
 
-footer a {
+footer a, footer button {
   position: relative;
   transition: all 200ms ease-out;
 }
@@ -298,10 +306,14 @@ footer a[href*="sobre"] {
   max-width: 10%;
   text-align: center;
 }
-iframe {
-  padding-top: 10px;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: 150px;
+
+footer a[href*="sobre"], footer button {
+  border: 1px solid darkgrey;
+}
+
+footer button {
+  padding: 1% 2%;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
 }
