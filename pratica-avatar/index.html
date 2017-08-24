@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Avatar Creator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Boogaloo|Baloo+Bhaijaan|Encode+Sans">
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="marca.css">
+    <link rel="stylesheet" href="avatar.css">
+    <link rel="stylesheet" href="controles.css">
+  </head>
+  <body>
+    <header>
+      <h1 class="marca animada">
+        <span>Avatar</span><span>Creator</span>
+      </h1>
+    </header>
+
+    <main>
+      <section id="secao-preview">
+        <h2>Preview</h2>
+        <div id="avatar-preview">
+          <!-- partes do corpo e camisa -->
+          <img src="imgs/cabeca.png" alt="Cabeça" id="avatar-cabeca">
+          <img src="imgs/corpo.png" alt="Corpo" id="avatar-corpo">
+          <img src="imgs/camisa-1.png" alt="Camisa" id="avatar-camisa">
+
+          <!-- expressão facial -->
+          <img src="imgs/expressao-marota.png" alt="Expressão facial" id="avatar-expressao">
+
+          <!-- cabelo -->
+          <img src="imgs/cabelo-careca.png" alt="Cabelo" id="avatar-cabelo">
+
+          <!-- os acessórios -->
+          <img src="imgs/acessorio-oculos.png" alt="Óculos" id="avatar-oculos" class="avatar-acessorio">
+          <img src="imgs/acessorio-lacinhos.png" alt="Lacinhos" id="avatar-lacinhos" class="avatar-acessorio">
+          <img src="imgs/acessorio-bandana.png" alt="Bandana" id="avatar-bandana" class="avatar-acessorio">
+        </div>
+        <p id="avatar-nome">Meu nome...</p>
+        <button id="baixar">
+          <img src="imgs/baixar.png">Baixar Avatar
+        </button>
+      </section>
+      <section id="secao-controles">
+        <h2>Controles</h2>
+        <div>
+          <div>
+            <label for="nome-in">Nome: </label><input type="text" id="nome-in" maxlength="50">
+          </div>
+          <div>
+            <label for="cor-pele-in">Cor da Pele: </label><input type="color" id="cor-pele-in">
+          </div>
+          <div>
+            <label for="cabelo-select">Cabelo: </label>
+            <select id="cabelo-select">
+              <option value="imgs/cabelo-careca-curto.png">Careca '-'</option>
+              <option value="imgs/cabelo-alaranjado-curto.png">Cabelo alaranjado curto</option>
+              <option value="imgs/cabelo-azul-longo.png">Cabelo azul longo</option>
+              <option value="imgs/cabelo-marrom-curto.png">Cabelo marrom curto</option>
+              <option value="imgs/cabelo-preto-medio.png">Cabelo preto médio</option>
+              <option value="imgs/cabelo-roxo-curto.png">Cabelo roxo curto</option>
+              <option value="imgs/cabelo-verde-medio.png">Cabelo verde médio</option>
+            </select>
+          </div>
+          <div class="acessorios">
+            Acessórios:
+            <label>
+              <input type="checkbox" id="oculos-in" value="oculos">Óculos de grau
+            </label>
+            <label>
+              <input type="checkbox" id="lacinhos-in" value="lacinhos">Lacinhos vermelhos
+            </label>
+            <label>
+              <input type="checkbox" id="bandana-in" value="bandana">Bandana amarela
+            </label>
+          </div>
+        </div>
+      </section>
+      <section id="secao-instrucoes">
+        <h2>Instruções</h2>
+        <p>O
+        <span class="marca animada">
+          <span>Avatar</span><span>Creator</span>
+        </span>
+        é um sensacional criador de avatares. Escolha a cor, o cabelo, o nome
+        e várias outras coisas sensacionais e crie alguém bem bacana.</p>
+        <h2>Créditos</h2>
+        <p>As imagens usadas foram adaptadas do
+          <a href="http://www.icongenerators.net/pixelavatar.html">
+            Pixel Art Avatar Icon Generator</a>.</p>
+      </section>
+    </main>
+    <script src="avatar.js" charset="utf-8"></script>
+    <script src="html2canvas.js" charset="utf-8"></script>
+  </body>
+</html>

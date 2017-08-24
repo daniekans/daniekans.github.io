@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  font-family: 'Encode Sans', sans-serif;
+  background-color: lightsteelblue;
+}
+
+header {
+  padding: 0.1em 0.5em;
+  position: relative;
+  transition: all 150ms ease-out 50ms;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px dashed rgba(0, 0, 0, 0.16);
+  background-image: url(imgs/fundo-cabecalho.png);
+}
+
+header:hover {
+  box-shadow: 4px 4px 4px rgba(0,0,0,.2);
+  background-color: rgba(255, 255, 255, 0.20);
+  top: -4px;
+}
+
+header h1 {
+  font-size: 3em;
+  margin: 0.25em 0;
+}
+
+main {
+  display: flex;
+}
+
+main > section {
+  border: dashed rgba(0, 0, 0, 0.16);
+  border-width: 0 1px 1px;
+  padding: 0 1em 1em;
+  margin: 0 4px;
+}
+
+main > section:not(:first-child) {
+  margin-left: 1em;
+  flex: 1 1 30%;
+}
+
+main > section:not(:last-child) {
+  margin-right: 1em;
+}
+
+#avatar-preview::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -15px;
+  height: 15px;
+  right: 10px;
+  width: 26px;
+  background-image: url(imgs/marcacao-de-tesoura.png);
+}
+
+div.acessorios label { display: block; }

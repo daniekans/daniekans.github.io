@@ -1,0 +1,44 @@
+.marca > span {
+  display: inline-block;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.54);
+  background-clip: text;
+  text-fill-color: transparent;
+  text-stroke: 1px rgba(0, 0, 0, 0.54);
+  font-weight: bold;
+  line-height: 1em;
+  height: 1.5em;
+  margin-bottom: -0.5em;
+  animation: translada-background 1.5s ease-in-out 0s 2 alternate-reverse;
+}
+
+.marca > span:first-child {
+  font-family: 'Boogaloo', cursive;
+  color: #a943c7;
+  background-image: linear-gradient(to bottom, #9e109a 10%, #29c79b 40%, #29c79b 60%, #9e109a 90%);
+}
+
+.marca > span:last-child {
+  font-family: 'Baloo Bhaijaan', cursive;
+  color: #3a9850;
+  background-image: linear-gradient(to bottom, #F48FB1 10%,  #8BC34A 40%, #8BC34A 60%, #F48FB1 90%);
+  animation-delay: 1s;
+}
+
+.marca.animada:hover > span {
+  animation: translada-background 3s ease-in-out 0s infinite alternate-reverse;
+}
+
+.marca.animada:hover > span:last-child {
+  animation-delay: 1.5s;
+}
+
+@keyframes translada-background {
+  from {
+    background-position-y: 0em;
+  }
+  to {
+    background-position-y: 1.5em;
+  }
+}

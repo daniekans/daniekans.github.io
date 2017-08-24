@@ -1,0 +1,61 @@
+#avatar-preview {
+  /* define a largura mínima de 200px para o avatar */
+  min-width: 200px;
+  /* hack: define a altura como sendo o mesmo tamanho da largura,
+   * menos 2px da borda. Uso o padding-bottom em vez de height para que
+   * a div fique "responsive" e com a altura sempre igual à largura
+   * (porque a razão de aspecto do avatar é 1) */
+  padding-bottom: calc(100% - 2px);
+  border: 1px dashed silver;
+  /* para que os elementos dentro do avatar sejam posicionados de forma
+   * absoluta */
+  position: relative;
+  background-color: white;
+}
+
+#avatar-preview > img {
+  position: absolute;
+
+  /* quando aumentada, tipicamente a imagem fica "borrada". Para manter os
+   * pixels bem visíveis (quadradinhos), usamos isto: */
+  image-rendering: pixelated;
+}
+
+#avatar-cabeca,
+#avatar-cabelo,
+#avatar-expressao {
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+#avatar-corpo,
+#avatar-camisa {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+
+#avatar-nome {
+  text-align: center;
+  font-family: 'Baloo Bhaijaan', cursive;
+  text-shadow: 1px 1px #794d4d;
+  margin-top: 0.25em;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+
+.avatar-acessorio {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+}
+
+.visivel {
+  visibility: visible;
+}
