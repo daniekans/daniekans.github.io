@@ -1,0 +1,319 @@
+/* A Person's Life
+ * Trabalho de Web – INF-1A – CEFET-MG
+ */
+
+/*--- Definições iniciais ---*/
+
+@import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
+
+html, body {
+	min-height: 100%;
+}
+
+body {
+	font-family: 'Architects Daughter', cursive;
+	margin: 0;
+}
+
+ /*--- Elementos à parte do conteúdo principal ---*/
+
+div#menu-lateral {
+	width: 20%;
+	height: 100%;
+	position: absolute;
+	left: -20%;
+	top: 0;
+	bottom: 0;
+	/*opacity: 0;*/
+	background-image: linear-gradient(to right, #13142c, 90%, black);
+	color: white;
+	font-size: 1.5em;
+	transform: rotateY(90deg);
+	transform-origin: right;
+	perspective: 400px;
+	padding: 2%;
+	box-sizing: border-box;
+}
+
+#menu-lateral #lista-opcoes {
+	padding: 0;
+}
+
+#menu-lateral #lista-opcoes li {
+	list-style: none;
+	padding: 5% 0;
+	transition: all 100ms linear;
+	position: relative;
+	top: 0;
+}
+
+#menu-lateral #lista-opcoes li:hover {
+	top: -10px;
+	cursor: pointer;
+}
+
+#menu-lateral button {
+	color: white;
+}
+
+#menu-lateral, #conteudo, .menu-lateral-ativo #conteudo {
+	transition: all 300ms linear;
+}
+
+body.menu-lateral-ativo #menu-lateral {
+	left: 0;
+	opacity: 1;
+	transform: rotateY(0);
+}
+
+body.menu-lateral-ativo #conteudo {
+	left: 20%;
+}
+
+div#janela-info {
+	width: 50%;
+	height: 30%;
+	display: none;
+	opacity: 0;
+	border: solid 5px;
+	border-radius: 2%;
+	margin: 0 auto;
+	background-color: white;
+	position: relative;
+}
+
+div#aux {
+	min-width: 100%;
+	min-height: 100%;
+	position: fixed;
+	display: none;
+	transition: all 200ms linear;
+}
+
+#janela-info.ocupa-espaco, #menu-lateral.ocupa-espaco, #aux.ocupa-espaco {
+	opacity: 1;
+	display: block;
+}
+
+.escuro {
+	background-color: rgba(0, 0, 0, 0.3);
+	transition: all 300ms linear;
+}
+
+.foto {
+	width: 30%;
+	border-radius: 25px;
+
+}
+
+.criador {
+		background-color: green;
+		text-align: center;
+		margin: -15px 150px;
+		border-radius: 3%;
+}
+
+button {
+	font-family: 'Josefin Sans', sans-serif;
+}
+
+#only-creators {
+		clear: left;
+		display: flex;
+		justify-content: space-around;
+}
+
+#only-creators h3, #only-creators p {
+		font-family: 'Oxygen', sans-serif;
+		padding-top: 5px;
+}
+
+#creators-info-titulo {
+		font-size:  200%;
+		text-align: center;
+		padding-bottom: 5%; padding-top: 3%;
+		font-family: 'Indie Flower', cursive;
+}
+
+/* >>> Estilização da parte principal... <<< */
+
+/*--- #conteudo ---*/
+
+div#conteudo {
+	position: relative;
+	left: 0;
+	bottom: 0;
+	min-height: 100%;
+	min-width: 100%;
+}
+
+/*--- header ---*/
+
+header {
+	background-image: linear-gradient(to top, #ff8c1d, 10%, #ee8e32);
+	color: white;
+	padding: 1%;
+	display: flex;
+	align-items: center;
+	z-index: 3;
+}
+
+header * {
+	text-shadow: 3px 3px 4px rgb(190, 129, 7);
+	font-size: 1.5em;
+}
+
+header img {
+	width: 3%;
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: text-bottom;
+	margin: 0 1%;
+	transition: all 200ms linear;
+	padding: 1%;
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+header img:hover {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+header span {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+header span:nth-child(even) {
+	margin-right: 20px;
+}
+
+header span:nth-child(odd) {
+	font-weight: bold;
+}
+
+header #atributos-jogador {
+	display: inline-block;
+	margin-left: 5%;
+}
+
+/*--- main ---*/
+
+main {
+	min-height: 100%;
+	z-index: 1;
+}
+
+main h2 {
+	margin-top: 0;
+}
+
+#tela-jogo, #itens-jogo {
+	border: 3px solid black;
+	box-sizing: border-box;
+}
+
+#tela-jogo {
+	width: 70%;
+	height: 80vh;
+	overflow: hidden;
+}
+
+#tela-jogo #img-cenario {
+	min-width: 100%;
+	max-height: 100%;
+	vertical-align: middle;
+}
+
+#itens-jogo {
+	width: 30%;
+	height: 80vh;
+	float: right;
+	padding: 1%;
+	position: relative;
+	/*overflow: auto;*/
+}
+
+#itens-jogo section {
+	overflow: auto;
+	height: 40%;
+}
+
+#itens-jogo section h3 {
+	margin: 2% 0;
+}
+
+#itens-jogo section button {
+	color: white;
+	padding: 4%;
+	background-color: rgb(0, 210, 46);
+	border: none;
+}
+
+#itens-jogo section button:hover {
+	background-color: rgb(81, 208, 109);
+	cursor: pointer;
+}
+
+#itens-jogo section button:active {
+	background-color: rgb(41, 148, 27);
+}
+
+#itens-jogo #loja {
+	background-color: rgb(245, 222, 67);
+}
+
+#itens-jogo #pertences {
+	background-color: rgb(98, 230, 95);
+}
+
+#itens-jogo > h2 {
+	text-align: center;
+	margin: 1%;
+}
+
+.sem-itens {
+	text-align: center;
+	color: red;
+	line-height: 10;
+}
+
+.item {
+	padding: 5%;
+	margin: 3%;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.item img {
+	max-width: 20%;
+}
+
+.item button, .item span {
+	float: right;
+	clear: right;
+}
+
+.clear {
+	clear: both;
+}
+
+/*--- footer ---*/
+
+footer {
+	clear: both;
+	background-color: rgb(77, 111, 231);
+	color: white;
+	padding: 2%;
+	text-align: center;
+}
+
+/*--- barra de rolagem e keyframes ---*/
+
+::-webkit-scrollbar {
+	background: #f2f2f2;
+  width: 0.7%;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: gray;
+}

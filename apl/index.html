@@ -1,0 +1,128 @@
+<!-- A Person's Life -->
+<!-- Trabalho de Web – INF-1A – CEFET-MG -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style/estilo-geral.css">
+    <link rel="stylesheet" href="style/itens-e-jogador.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Indie+Flower" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
+    <link rel="shortcut icon" href="imgs/life.ico">
+    <title>A Person's Life</title>
+  </head>
+  <body>
+
+    <div id="conteudo">
+      <!-- div auxiliar que cobre todo o main (escurece nos casos de "foco" em outras janelas): -->
+      <div id="aux"></div>
+      <!-- O header terá o nome do jogo seguido do nome, idade e dinheiro do jogador -->
+      <header>
+        <img id="botao-menu-lateral" src="imgs/configuracoes2.png">
+        <img id="icone-info" src="imgs/informacao.gif">
+        <section id="atributos-jogador">
+          <span>Nome: </span><span id="nome-span"></span>
+          <span>Idade: </span><span id="idade-span"></span>
+          <span>Dinheiro: </span><span id="dinheiro-span">R$</span>
+        </section>
+      </header> <!-- fim do header -->
+
+      <!-- O main conterá todo o contexto gráfico e interativo do jogo: -->
+      <main>
+        <div id="itens-jogo">
+          <h2>Loja</h2>
+          <section id="loja">
+
+          </section>
+          <hr>
+          <h2>Pertences</h2>
+          <section id="pertences">
+            <!-- Não é necessário uma div aqui... -->
+            <!-- Aqui fica os itens que o jogador compra -->
+          </section>
+          <div class="clear"></div>
+        </div>
+        <div id="tela-jogo">
+          <img id="img-cenario" src="imgs/quarto-fundo-branco.png" alt="Cenário para o personagem ">
+          <!-- Restante das imagens, com position absolute: -->
+          <img id="jogador-imagem" src="imgs/boneco.png" alt="">
+        </div>
+      </main> <!-- fim do main -->
+
+      <!-- Talvez no footer haverá lgumas informações de contato, logo da empresa, etc -->
+      <footer>
+        <h2>Obrigado por jogar :D</h2>
+        <h4>Contatos:</h4>
+      </footer> <!-- fim do footer -->
+
+      <div id="menu-criacao-conta">
+        <!-- ... -->
+        <label for="input-nome">Digite o nome do personagem: </label>
+        <input type="text" id="input-nome" placeholder="Ex: Joãozinho">
+        <div id="escolha-genero">
+          <section class="opc-genero-jogador" data-genero="masculino">
+            <img src="" alt="">
+            <p>Menino 1</p>
+          </section>
+          <section class="opc-genero-jogador" data-genero="masculino">
+            <img src="" alt="">
+            <p>Menino 2</p>
+          </section>
+          <section class="opc-genero-jogador" data-genero="feminino">
+            <img src="" alt="">
+            <p>Menina 1</p>
+          </section>
+          <section class="opc-genero-jogador" data-genero="feminino">
+            <img src="" alt="">
+            <p>Menina 2</p>
+          </section>
+        </div>
+        <button id="botao-iniciar-jogo">Iniciar Jogo</button>
+      </div>
+
+    </div> <!-- fim do #conteudo -->
+
+    <!-- No caso de deletar, mutar áudio, ver as informações sobre os criadores (talvez...), etc, existirá uma div lateral (inicialmente invisível), como um menu. -->
+    <div id="menu-lateral">
+      <h2>Menu</h2>
+      <ul id="lista-opcoes">
+        <li id="li-instrucoes">Instruções</li>
+        <li id="li-apagar-dados">Apagar dados da conta</li>
+      </ul>
+    </div>
+    <!-- Janela modal com as informações sobre os criadores e créditos: -->
+    <div id="janela-info">
+        <h2 id="creators-info-titulo">INFORMAÇÕES SOBRE OS CRIADORES</h2>
+        <div ="only-creators">
+          <section class="criador">
+            <h3>Bruno Souza</h3>
+            <img class="foto" src="imgs/bruno.jpg">
+            <p>deixa para depois ;)</p>
+          </section>
+          <section class="criador">
+            <h3>Daniel Franco</h3>
+            <img class="foto" src="imgs/daniel.jfif">
+            <p>deixa para depois ;)</p>
+          </section>
+          <section class="criador">
+            <h3>Gabriel Cruz</h3>
+            <img class="foto" src="imgs/gabriel.jpg">
+            <p>deixa para depois ;)</p>
+          </section>
+          <section class="criador">
+            <h3>Guilherme Batista</h3>
+            <img class="foto" src="imgs/batista.jpg">
+            <p>deixa para depois ;)</p>
+          </section>
+      </div>
+    </div>
+
+    <script src="scripts/jquery-3.2.1.min.js"></script>
+    <script src="scripts/classes.js"></script>
+    <script src="scripts/jogo.js"></script>
+    <script src="scripts/interface.js"></script>
+
+  </body>
+</html>

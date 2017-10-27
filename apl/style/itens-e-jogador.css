@@ -1,0 +1,16 @@
+/* A Person's Life
+ * Trabalho de Web – INF-1A – CEFET-MG
+ */
+
+#tela-jogo img:not(#img-cenario) {
+  position: absolute;
+}
+
+#jogador-imagem {
+  max-width: 20%;
+  bottom: 50%;
+}
+
+#jogador-imagem:hover {
+  cursor: pointer;
+}
