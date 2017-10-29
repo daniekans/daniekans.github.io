@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style/estilo-geral.css">
     <link rel="stylesheet" href="style/itens-e-jogador.css">
     <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Indie+Flower" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
     <link rel="shortcut icon" href="imgs/life.ico">
     <title>A Person's Life</title>
@@ -17,7 +16,7 @@
 
     <div id="conteudo">
       <!-- div auxiliar que cobre todo o main (escurece nos casos de "foco" em outras janelas): -->
-      <div id="aux"></div>
+      <div id="aux" class="escuro ocupa-espaco"></div>
       <!-- O header terá o nome do jogo seguido do nome, idade e dinheiro do jogador -->
       <header>
         <img id="botao-menu-lateral" src="imgs/configuracoes2.png">
@@ -49,6 +48,9 @@
           <!-- Restante das imagens, com position absolute: -->
           <img id="jogador-imagem" src="imgs/boneco.png" alt="">
         </div>
+        <div id="upgrades-jogo">
+          
+        </div>
       </main> <!-- fim do main -->
 
       <!-- Talvez no footer haverá lgumas informações de contato, logo da empresa, etc -->
@@ -59,8 +61,10 @@
 
       <div id="menu-criacao-conta">
         <!-- ... -->
-        <label for="input-nome">Digite o nome do personagem: </label>
+        <h2>Crie o seu personagem!</h2>
+        <label for="input-nome">Digite o nome do personagem:</label>
         <input type="text" id="input-nome" placeholder="Ex: Joãozinho">
+        <p>Escolha a aparência de acordo com o seu gosto: </p>
         <div id="escolha-genero">
           <section class="opc-genero-jogador" data-genero="masculino">
             <img src="" alt="">
@@ -79,7 +83,7 @@
             <p>Menina 2</p>
           </section>
         </div>
-        <button id="botao-iniciar-jogo">Iniciar Jogo</button>
+        <button id="botao-iniciar-jogo">Iniciar Jogo!</button>
       </div>
 
     </div> <!-- fim do #conteudo -->
@@ -96,26 +100,30 @@
     <div id="janela-info">
         <h2 id="creators-info-titulo">INFORMAÇÕES SOBRE OS CRIADORES</h2>
         <div ="only-creators">
-          <section class="criador">
+          <article class="bloco-criador">
+            <img src="imgs/bruno.jpg">
             <h3>Bruno Souza</h3>
-            <img class="foto" src="imgs/bruno.jpg">
             <p>deixa para depois ;)</p>
-          </section>
-          <section class="criador">
+            <div class="clear"></div>
+          </article>
+          <article class="bloco-criador">
+            <img src="imgs/daniel.jfif">
             <h3>Daniel Franco</h3>
-            <img class="foto" src="imgs/daniel.jfif">
             <p>deixa para depois ;)</p>
-          </section>
-          <section class="criador">
+            <div class="clear"></div>
+          </article>
+          <article class="bloco-criador">
+            <img src="imgs/gabriel.jpg">
             <h3>Gabriel Cruz</h3>
-            <img class="foto" src="imgs/gabriel.jpg">
             <p>deixa para depois ;)</p>
-          </section>
-          <section class="criador">
+            <div class="clear"></div>
+          </article>
+          <article class="bloco-criador">
+            <img src="imgs/batista.jpg">
             <h3>Guilherme Batista</h3>
-            <img class="foto" src="imgs/batista.jpg">
             <p>deixa para depois ;)</p>
-          </section>
+            <div class="clear"></div>
+          </article>
       </div>
     </div>
 

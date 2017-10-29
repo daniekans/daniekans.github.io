@@ -18,11 +18,13 @@ $(function() {
 	});
 
 	$auxEl.on('click', function() {
-		$auxEl.removeClass('escuro');
-		setTimeout(function () {
-			$auxEl.hide();
-		}, 200);
-		$infoEl.removeClass('ocupa-espaco');
+		if ($('#menu-criacao-conta').css('display') === 'none') {
+			$auxEl.removeClass('escuro');
+			setTimeout(function () {
+				$auxEl.hide();
+			}, 200);
+			$infoEl.removeClass('ocupa-espaco');
+		}
 	});
 
 	$('header').on('click', '#botao-menu-lateral', function() {

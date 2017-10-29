@@ -67,16 +67,13 @@ $(function() {
   function iniciarJogo() {
 
     /* Funcionamento do Jogo */
-
-    let $persSelecionadoEl = $('.selecionado');
-    if ($persSelecionadoEl.length) {
-      jogador.imagem.attr('src', $persSelecionadoEl.find('img').attr('src')); // pode ser que as imagens não sejam as do personagem, mas sim apenas para indicar o sexo. Assim terá uma surpresa maior quanto à aparência.
-      jogador.genero = $persSelecionadoEl.data('genero');
-    }
+    setTimeout(function() {
+      $('#aux').trigger('click');
+    }, 350);
     $('#nome-span').text(jogador.nome);
     $('#idade-span').text(jogador.idade);
     $('#dinheiro-span').text('R$' + jogador.dinheiro);
-    $('title').text(jogador.nome + '\'s Life');
+    $('title').text(jogador.nome + '\'' + (jogador.nome.endsWith('s')) ? '' : 's Life');
 
     // Clique na imagem do personagem e efeitos:
     let $progressEl = $('#barra-xp');
@@ -110,17 +107,22 @@ $(function() {
     // Início do jogo:
     $('#botao-iniciar-jogo').on('click', function() {
 
+      let $persSelecionadoEl = $('.selecionado');
+
       if ($nomeEl.val().replace(' ', '') === '') {
         alert('Digite um nome válido!');
+      // } else if (!$persSelecionadoEl.length) {
+      //   alert('Selecione o modelo primeiro!');
       } else {
+
         // instanciação do novo jogador:
         jogador = new Jogador($nomeEl.val());
+        //jogador.imagem.attr('src', $persSelecionadoEl.find('img').attr('src'));
+        //jogador.genero = $persSelecionadoEl.data('genero');
         iniciarJogo();
 
         let $menuCriaConta = $('#menu-criacao-conta');
-        $menuCriaConta.animate({ opacity: '0' }, 300);
-        $menuCriaConta.animate({ display: 'none' });
-
+        $menuCriaConta.fadeOut(300);
       }
 
     });

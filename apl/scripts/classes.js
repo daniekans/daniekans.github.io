@@ -85,6 +85,31 @@ class Item {
 
 }
 
+let todosOsItens = { // Talvez seja bom criar um arquivo .json com os dados.
+
+  // Criança e Adolescente:
+  bola: new Item('Bola', 10, FasesDaVida.CRIANCA),
+  bicicleta: new Item('Bicicleta de Brinquedo', 50, FasesDaVida.CRIANCA),
+  carrinho: new Item('Carrinho de Brinquedo', 40, FasesDaVida.CRIANCA),
+  boneco: new Item('Boneco', 20, FasesDaVida.CRIANCA),
+  chocalho: new Item('Chocalho', 30, FasesDaVida.CRIANCA),
+  peteca: new Item('Peteca', 10, FasesDaVida.CRIANCA),
+  cubos: new Item('Cubos de Brinquedo', 15, FasesDaVida.CRIANCA),
+  cachorro: new Item('Cachorro', 200, FasesDaVida.ADOLESCENTE),
+  gato: new Item('Gato', 200, FasesDaVida.ADOLESCENTE),
+  mp3: new Item('MP3 Player', 150, FasesDaVida.ADOLESCENTE),
+  celular: new Item('Celular', 700, FasesDaVida.ADOLESCENTE),
+  videogame: new Item('Video-game', 1000, FasesDaVida.ADOLESCENTE),
+  computador: new Item('Computador', 1500, FasesDaVida.ADOLESCENTE),
+  // Adulto e Idoso:
+  sofa: new Item('Sofá', 500, FasesDaVida.ADULTO),
+  tv: new Item('Televisão', 1500, FasesDaVida.ADULTO),
+  carro: new Item('Carro', 20000, FasesDaVida.ADULTO),
+  casa: new Item('Casa', 150000, FasesDaVida.ADULTO),
+  eletrodomesticos: new Item('Eletrodomésticos', 10000, FasesDaVida.ADULTO)
+
+};
+
 // Classe Jogador, representando o usuário e seus dados.
 class Jogador {
 
@@ -102,8 +127,7 @@ class Jogador {
       this.itens = jog.itens;
       this.faseVida = jog.faseVida;
       this.tipoItens = jog.tipoItens;
-      this.situacao = jog.situacao; // Este atributo serve para
-      this.imagem = jog.imagem;
+      this.situacao = jog.situacao;
     } else {
       this.nome = jog;
       this.idade = 1;
@@ -118,8 +142,8 @@ class Jogador {
       this.faseVida = FasesDaVida.CRIANCA;
       this.tipoItens = this.faseVida;
       this.situacao = Situacao.ESTUDANTE; // Este atributo serve para
-      this.imagem = $('#jogador-imagem');
     }
+    this.imagem = $('#jogador-imagem');
   }
 
   aumentaIdade() {
@@ -130,6 +154,7 @@ class Jogador {
         this.faseVida = FasesDaVida.ADOLESCENTE;
         this.tipoItens = this.faseVida;
         this.incrementoDinheiro = 5;
+        Item.atzItens(todosOsItens, this);
         break;
       case 18:
         this.faseVida = FasesDaVida.ADULTO;
