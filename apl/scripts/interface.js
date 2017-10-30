@@ -19,8 +19,9 @@ $(function() {
 
 	$auxEl.on('click', function() {
 		if ($('#menu-criacao-conta').css('display') === 'none') {
+			$('.ficha').remove();
 			$auxEl.removeClass('escuro');
-			setTimeout(function () {
+			setTimeout(function() {
 				$auxEl.hide();
 			}, 200);
 			$infoEl.removeClass('ocupa-espaco');

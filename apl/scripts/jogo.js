@@ -5,50 +5,6 @@
 
 $(function() {
 
-  let todosOsItens = { // Talvez seja bom criar um arquivo .json com os dados.
-
-    // Criança e Adolescente:
-    bola: new Item('Bola', 10, FasesDaVida.CRIANCA),
-    bicicleta: new Item('Bicicleta de Brinquedo', 50, FasesDaVida.CRIANCA),
-    carrinho: new Item('Carrinho de Brinquedo', 40, FasesDaVida.CRIANCA),
-    boneco: new Item('Boneco', 20, FasesDaVida.CRIANCA),
-    chocalho: new Item('Chocalho', 30, FasesDaVida.CRIANCA),
-    peteca: new Item('Peteca', 10, FasesDaVida.CRIANCA),
-    cubos: new Item('Cubos de Brinquedo', 15, FasesDaVida.CRIANCA),
-    cachorro: new Item('Cachorro', 200, FasesDaVida.ADOLESCENTE),
-    gato: new Item('Gato', 200, FasesDaVida.ADOLESCENTE),
-    mp3: new Item('MP3 Player', 150, FasesDaVida.ADOLESCENTE),
-    celular: new Item('Celular', 700, FasesDaVida.ADOLESCENTE),
-    videogame: new Item('Video-game', 1000, FasesDaVida.ADOLESCENTE),
-    computador: new Item('Computador', 1500, FasesDaVida.ADOLESCENTE),
-    // Adulto e Idoso:
-    sofa: new Item('Sofá', 500, FasesDaVida.ADULTO),
-    tv: new Item('Televisão', 1500, FasesDaVida.ADULTO),
-    carro: new Item('Carro', 20000, FasesDaVida.ADULTO),
-    casa: new Item('Casa', 150000, FasesDaVida.ADULTO),
-    eletrodomesticos: new Item('Eletrodomésticos', 10000, FasesDaVida.ADULTO)
-
-  };
-
-  // não haverá itens para idoso por enquanto...
-
-  // arrays com as fichas (cujos dados estarão em um arquivo .json):
-  let todasAsFichas = [];
-  let fichasCrianca = [];
-  let fichasAdolesc = [];
-  let fichasAdulto = [];
-  let fichasIdoso = [];
-
-  // criação das fichas:
-  $.getJSON('fichas.json', function(dados) {
-    let fichas = dados.fichas;
-    for (let ficha of fichas) {
-      todasAsFichas.push(new Ficha(ficha.mensagem, ficha.tipo, ficha.efeito));
-    }
-  });
-
-
-
   let jogador;
 
   /* Janela de criação inicial do personagem */
@@ -67,9 +23,12 @@ $(function() {
   function iniciarJogo() {
 
     /* Funcionamento do Jogo */
-    setTimeout(function() {
-      $('#aux').trigger('click');
-    }, 350);
+
+    let $auxEl = $('#aux');
+    // remoção de #aux. O método fadeOut() gera o mesmo resultado, mas não remove as classes.
+    $auxEl.removeClass('escuro');
+    $auxEl.removeClass('ocupa-espaco');
+
     $('#nome-span').text(jogador.nome);
     $('#idade-span').text(jogador.idade);
     $('#dinheiro-span').text('R$' + jogador.dinheiro);
@@ -87,7 +46,6 @@ $(function() {
         $('#idade-span').text(jogador.idade);
         $('#dinheiro-span').text('R$' + jogador.dinheiro);
         $progressEl.val($progressEl.val() + jogador.incrementoXP);
-        // estruturas de seleção (para o Funcionamento das fichas e o fluxo da história):
       }
     });
 

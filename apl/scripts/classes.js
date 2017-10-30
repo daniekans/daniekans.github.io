@@ -3,6 +3,8 @@
  * Versão 2 – Sem teste
  */
 
+/* Este arquivo possui as classes e variáveis que darão a base para o jogo */
+
  // Tentativa de criar uma enumeração no JS...
  const FasesDaVida = { // primeira letra maiúscula por agir como uma enum
    CRIANCA: 'Criança',
@@ -78,42 +80,18 @@ class Item {
 
     [$pertencesEl, $lojaEl].forEach(function($containerEl) {
       if (!$containerEl.children().length)
-        $pertencesEl.append($('<h3>Sem itens.<h3>').addClass('sem-itens'));
+        $containerEl.append($('<h3>Sem itens.<h3>').addClass('sem-itens'));
     });
 
   }
 
 }
 
-let todosOsItens = { // Talvez seja bom criar um arquivo .json com os dados.
-
-  // Criança e Adolescente:
-  bola: new Item('Bola', 10, FasesDaVida.CRIANCA),
-  bicicleta: new Item('Bicicleta de Brinquedo', 50, FasesDaVida.CRIANCA),
-  carrinho: new Item('Carrinho de Brinquedo', 40, FasesDaVida.CRIANCA),
-  boneco: new Item('Boneco', 20, FasesDaVida.CRIANCA),
-  chocalho: new Item('Chocalho', 30, FasesDaVida.CRIANCA),
-  peteca: new Item('Peteca', 10, FasesDaVida.CRIANCA),
-  cubos: new Item('Cubos de Brinquedo', 15, FasesDaVida.CRIANCA),
-  cachorro: new Item('Cachorro', 200, FasesDaVida.ADOLESCENTE),
-  gato: new Item('Gato', 200, FasesDaVida.ADOLESCENTE),
-  mp3: new Item('MP3 Player', 150, FasesDaVida.ADOLESCENTE),
-  celular: new Item('Celular', 700, FasesDaVida.ADOLESCENTE),
-  videogame: new Item('Video-game', 1000, FasesDaVida.ADOLESCENTE),
-  computador: new Item('Computador', 1500, FasesDaVida.ADOLESCENTE),
-  // Adulto e Idoso:
-  sofa: new Item('Sofá', 500, FasesDaVida.ADULTO),
-  tv: new Item('Televisão', 1500, FasesDaVida.ADULTO),
-  carro: new Item('Carro', 20000, FasesDaVida.ADULTO),
-  casa: new Item('Casa', 150000, FasesDaVida.ADULTO),
-  eletrodomesticos: new Item('Eletrodomésticos', 10000, FasesDaVida.ADULTO)
-
-};
-
 // Classe Jogador, representando o usuário e seus dados.
 class Jogador {
 
   constructor(jog = 'Person') {
+    // Eu gostaria de eliminar esta repetição, mas não sei como fazer isto...
     if (jog instanceof Object) {
       this.nome = jog.nome;
       this.idade = jog.idade;
@@ -149,6 +127,7 @@ class Jogador {
   aumentaIdade() {
 
     this.idade++;
+    // configurações para as mudanças de fase da vida:
     switch (this.idade) {
       case 12:
         this.faseVida = FasesDaVida.ADOLESCENTE;
@@ -161,6 +140,7 @@ class Jogador {
         this.tipoItens = this.faseVida;
         this.incrementoDinheiro = 15;
         this.incrementoXP = 3;
+        Item.atzItens(todosOsItens, this)
         break;
       case 65:
         this.faseVida = FasesDaVida.IDOSO;
@@ -168,6 +148,29 @@ class Jogador {
       case 100:
         this.faseVida = FasesDaVida.MORTO;
         break;
+    }
+
+    // coisas acontecerão de acordo com a sorte do jogador...
+    let fichas;
+    switch (this.faseVida) {
+      case FasesDaVida.CRIANCA:
+      fichas = fichasCrianca;
+      break;
+      case FasesDaVida.ADOLESCENTE:
+      fichas = fichasAdolesc;
+      break;
+      case FasesDaVida.ADULTO:
+      fichas = fichasAdulto;
+      break;
+      case FasesDaVida.IDOSO:
+      fichas = fichasIdoso;
+      break;
+    }
+
+    for (let ficha of fichas)
+    if (ficha.testaProbabilidade()) {
+      ficha.exibir();
+      ficha.aplicaEfeito(this);
     }
 
   }
@@ -209,15 +212,155 @@ class Jogador {
 
 }
 
-// Classe Ficha, usada para as situações aleatórias que surgem durante a vida do jogador.
-class Ficha {
+class EfeitoJogador {
 
-  constructor(mensagem = '', tipo = null, efeito = 0, probabilidade = []) {
+  constructor(mensagem = '', tipoEfeito = '', efeito = null) {
     this.mensagem = mensagem;
-    this.tipo = tipo;
+    this.tipoEfeito = tipoEfeito;
     // efeito é a quntidade de dinheiro retirado ou a função executada de acordo com o 'comando' da ficha:
     this.efeito = efeito;
-    this.probabilidade = probabilidade;
+  }
+
+  aplicaEfeito(jogador) {
+
+    switch (this.tipoEfeito) {
+      case '$':
+        jogador.dinheiro += this.efeito;
+        break;
+      case ':)':
+        if (this.mensagem.includes('morreu'))
+          this.probabilidade = [0, 0];
+        jogador.felicidade += this.efeito;
+        break;
+      case '@':
+        jogador.inteligencia += this.efeito;
+        break;
+      case 's2':
+        jogador.amor += this.efeito;
+        break;
+      case 'x_x':
+        jogador.faseVida = FasesDaVida.MORTO;
+        // ...
+        Item.atzItens(todosOsItens, jogador);
+        break;
+    }
+
   }
 
 }
+
+// Classe Ficha, usada para as situações aleatórias que surgem durante a vida do jogador.
+class Ficha extends EfeitoJogador {
+
+  constructor(mensagem, tipoAcontecimento = '', tipoEfeito, efeito, probabilidade = []) {
+
+    super(mensagem, tipoEfeito, efeito);
+
+    this.tipoAcontecimento = tipoAcontecimento;
+    this.probabilidade = probabilidade;
+
+  }
+
+  testaProbabilidade() {
+
+    let minimo = this.probabilidade[0],
+        maximo = this.probabilidade[1],
+        numAleatorio = Math.floor((Math.random() * (maximo - minimo + 1)) + minimo),
+        // nesse caso, tanto o mínimo quanto o máximo poderão ser o número aleatório
+        numAux = minimo;
+
+    // o número auxiliar muda de valor e é comparado com o número aleatório 'minimo' vezes:
+    for (let i = 0; i < minimo && numAux <= maximo; i++, numAux++)
+      if (numAux === numAleatorio)
+        return true;
+
+    return false;
+
+  }
+
+  exibir() {
+
+    let $fichaEl = $('<div></div>'),
+        $tituloEl = $('<h2></h2>').text(this.tipoAcontecimento),
+        $mensagemEl = $('<p></p>').text(this.mensagem),
+        $efeitoEl = $('<p></p>'),
+        cor = {
+          color: (this.tipoAcontecimento === 'Azar')
+            ? 'rgb(255, 68, 68)' : 'rgb(12, 199, 14)'
+        };
+
+    $tituloEl.css(cor);
+    $efeitoEl.css(cor);
+    $efeitoEl.text(((this.efeito > 0) ? '+' : '') + this.efeito + this.tipoEfeito);
+
+    $fichaEl.append($tituloEl);
+    $fichaEl.append($mensagemEl);
+    $fichaEl.append($efeitoEl);
+    $fichaEl.addClass('ficha');
+    let $auxEl = $('#aux');
+    $auxEl.show();
+    $auxEl.addClass('escuro');
+    // bloquear eventos de mouse por um pequeno tempo
+
+    $('body').append($fichaEl);
+
+  }
+
+}
+
+// Classe Upgrade, a qual será implementada caso haja tempo suficiente:
+class Upgrade {
+
+  constructor(nomeId = '') {
+    this.imagem = $('#' + nomeId + '');
+  }
+
+  aplicaEfeito(jogador) {
+
+  }
+
+}
+
+/* Outras declarações: */
+
+var todosOsItens = { // Talvez seja bom criar um arquivo .json com os dados.
+
+  // Criança e Adolescente:
+  bola: new Item('Bola', 10, FasesDaVida.CRIANCA),
+  bicicleta: new Item('Bicicleta de Brinquedo', 50, FasesDaVida.CRIANCA),
+  carrinho: new Item('Carrinho de Brinquedo', 40, FasesDaVida.CRIANCA),
+  boneco: new Item('Boneco', 20, FasesDaVida.CRIANCA),
+  chocalho: new Item('Chocalho', 30, FasesDaVida.CRIANCA),
+  peteca: new Item('Peteca', 10, FasesDaVida.CRIANCA),
+  cubos: new Item('Cubos de Brinquedo', 15, FasesDaVida.CRIANCA),
+  cachorro: new Item('Cachorro', 200, FasesDaVida.ADOLESCENTE),
+  gato: new Item('Gato', 200, FasesDaVida.ADOLESCENTE),
+  mp3: new Item('MP3 Player', 150, FasesDaVida.ADOLESCENTE),
+  celular: new Item('Celular', 700, FasesDaVida.ADOLESCENTE),
+  videogame: new Item('Video-game', 1000, FasesDaVida.ADOLESCENTE),
+  computador: new Item('Computador', 1500, FasesDaVida.ADOLESCENTE),
+  // Adulto e Idoso:
+  sofa: new Item('Sofá', 500, FasesDaVida.ADULTO),
+  tv: new Item('Televisão', 1500, FasesDaVida.ADULTO),
+  carro: new Item('Carro', 20000, FasesDaVida.ADULTO),
+  casa: new Item('Casa', 150000, FasesDaVida.ADULTO),
+  eletrodomesticos: new Item('Eletrodomésticos', 10000, FasesDaVida.ADULTO)
+
+};
+
+// arrays com as fichas (cujos dados estarão em um arquivo .json):
+var todasAsFichas = [],
+    fichasCrianca,
+    fichasAdolesc,
+    fichasAdulto,
+    fichasIdoso;
+
+// criação das fichas:
+$.getJSON('fichas.json', function(dados) {
+  let fichas = dados.fichas;
+  for (let ficha of fichas) {
+    todasAsFichas.push(new Ficha(ficha.mensagem, ficha.tipoAcontecimento,
+      ficha.tipoEfeito, ficha.efeito, ficha.probabilidade));
+  }
+  fichasCrianca = todasAsFichas.slice(0, 6);
+});

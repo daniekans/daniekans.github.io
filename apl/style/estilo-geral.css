@@ -22,16 +22,15 @@ body {
 div#menu-lateral {
 	width: 20%;
 	height: 100%;
-	position: absolute;
+	position: fixed;
 	left: -20%;
 	top: 0;
 	bottom: 0;
 	background-image: linear-gradient(to right, #13142c, 90%, black);
 	color: white;
 	font-size: 1.5em;
-	transform: rotateY(90deg);
 	transform-origin: right;
-	perspective: 400px;
+	transform: rotateY(90deg);
 	padding: 2%;
 	box-sizing: border-box;
 }
@@ -76,21 +75,19 @@ body.menu-lateral-ativo #conteudo {
 div#janela-info {
 	background-color: floralwhite;
 	max-width: 50%;
-	box-sizing: border-box;
 	display: none;
 	opacity: 0;
 	padding: 5%;
-	border: 5px solid gray;
-	box-shadow: inset 3px 3px 50px silver;
-	margin: 5% 25%;
-	position: absolute;
-	top: 0;
-	z-index: 3;
 }
 
-#janela-info h2 {
-	/*font-size: 150%;*/
-	padding: 0;
+div#janela-info, .ficha {
+	margin: 5% 25%;
+	box-sizing: border-box;
+	position: absolute;
+	top: 0;
+	border: 5px solid gray;
+	box-shadow: inset 3px 3px 50px silver;
+	z-index: 3;
 }
 
 .bloco-criador {
@@ -103,7 +100,8 @@ div#janela-info {
 	border: 5px solid #c37225;
 }
 
-#janela-info h2 {
+#janela-info h2, .ficha h2 {
+	padding: 0;
 	margin: 0;
 	text-shadow: 2px 2px 2px lightgray;
 }
@@ -115,17 +113,6 @@ div#janela-info {
 	float: right;
 	transform-origin: left;
 	animation: flutuando 1500ms linear infinite alternate;
-}
-
-@keyframes flutuando {
-	from {
-		transform: scale(1);
-		box-shadow: -5px 2px 5px rgb(145, 101, 16);
-	}
-	to {
-		transform: scale(1.05);
-		box-shadow: -5px 2px 25px rgb(145, 101, 16);
-	}
 }
 
 #only-creators {
@@ -161,6 +148,10 @@ div#aux {
 .escuro {
 	background-color: rgba(0, 0, 0, 0.3);
 	transition: all 300ms linear;
+}
+
+.clear {
+	clear: both;
 }
 
 /*--- #menu-criacao-conta ---*/
@@ -232,9 +223,9 @@ header {
 	z-index: 3;
 }
 
-header * {
+header span {
 	text-shadow: 3px 3px 4px rgb(190, 129, 7);
-	font-size: 1.5em;
+	font-size: 3vw;
 }
 
 header img {
@@ -305,6 +296,21 @@ main h2 {
 
 #upgrades-jogo {
 	height: 15vh;
+	background-color: rgb(96, 96, 96);
+	box-shadow: inset 0px 3px 5px black;
+	color: white;
+	padding: 1%;
+	display: flex;
+	align-items: center;
+}
+
+#upgrades-jogo > h2 {
+	margin: 0 2%;
+	text-shadow: 2px 2px 3px black;
+}
+
+#upgrades-jogo p {
+	margin: 0;
 }
 
 #itens-jogo {
@@ -313,7 +319,7 @@ main h2 {
 	float: right;
 	padding: 1%;
 	position: relative;
-	box-shadow: inset 3px 3px 5px silver;
+	box-shadow: inset 0px 3px 5px silver;
 }
 
 #itens-jogo section {
@@ -330,10 +336,12 @@ main h2 {
 	padding: 4%;
 	background-color: rgb(0, 210, 46);
 	border: none;
+	transition: all 100ms linear;
 }
 
 #itens-jogo section button:hover {
-	background-color: rgb(81, 208, 109);
+	color: rgb(48, 214, 85);
+	background-color: white;
 	cursor: pointer;
 }
 
@@ -352,6 +360,8 @@ main h2 {
 #itens-jogo > h2 {
 	text-align: center;
 	margin: 1%;
+	text-shadow: 3px 3px 3px lightgray;
+	font-size: 2vw;
 }
 
 .sem-itens {
@@ -375,15 +385,33 @@ main h2 {
 	clear: right;
 }
 
-.clear {
-	clear: both;
+.item span {
+	padding: 2% 0;
+}
+
+/*--- fichas ---*/
+
+.ficha {
+	background-color: white;
+	width: 50%;
+	padding: 4%;
+}
+
+.ficha h2 {
+	text-align: center;
+	font-size: 4vw;
+}
+
+.ficha p {
+	text-align: justify;
+	font-size: 2vw;
 }
 
 /*--- footer ---*/
 
 footer {
 	clear: both;
-	background-color: rgb(77, 111, 231);
+	background-image: radial-gradient(rgb(77, 111, 231), 70%, rgb(3, 41, 175));
 	color: white;
 	padding: 2%;
 	text-align: center;
@@ -393,9 +421,21 @@ footer {
 
 ::-webkit-scrollbar {
 	background: #f2f2f2;
-  width: 0.7vh;
+  width: 0.5vw;
 }
 
 ::-webkit-scrollbar-thumb {
 	background-color: gray;
+}
+
+
+@keyframes flutuando {
+	from {
+		transform: scale(1);
+		box-shadow: -5px 2px 5px rgb(145, 101, 16);
+	}
+	to {
+		transform: scale(1.05);
+		box-shadow: -5px 2px 25px rgb(145, 101, 16);
+	}
 }
