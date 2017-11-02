@@ -33,6 +33,11 @@ div#menu-lateral {
 	transform: rotateY(90deg);
 	padding: 2%;
 	box-sizing: border-box;
+	z-index: 1;
+}
+
+#menu-lateral > h2 {
+	font-size: 3vw;
 }
 
 #menu-lateral #lista-opcoes {
@@ -41,6 +46,7 @@ div#menu-lateral {
 
 #menu-lateral #lista-opcoes li {
 	list-style: none;
+	font-size: 2vw;
 	padding: 5% 0;
 	transition: all 100ms linear;
 	position: relative;
@@ -78,6 +84,8 @@ div#janela-info {
 	display: none;
 	opacity: 0;
 	padding: 5%;
+	max-height: 80%;
+	overflow: auto;
 }
 
 div#janela-info, .ficha {
@@ -104,6 +112,8 @@ div#janela-info, .ficha {
 	padding: 0;
 	margin: 0;
 	text-shadow: 2px 2px 2px lightgray;
+	text-align: center;
+	font-size: 3vw;
 }
 
 .bloco-criador img {
@@ -210,6 +220,7 @@ div#conteudo {
 	bottom: 0;
 	min-height: 100%;
 	min-width: 100%;
+	z-index: 2;
 }
 
 /*--- header ---*/
@@ -218,8 +229,6 @@ header {
 	background-image: linear-gradient(to top, #ff8c1d, 10%, #ee8e32);
 	color: white;
 	padding: 1%;
-	display: flex;
-	align-items: center;
 	z-index: 3;
 }
 
@@ -263,6 +272,11 @@ header #atributos-jogador {
 	white-space: nowrap;
 }
 
+#tela-jogo, header, #upgrades-jogo {
+	display: flex;
+	align-items: center;
+}
+
 /*--- main ---*/
 
 main {
@@ -280,6 +294,7 @@ main h2 {
 }
 
 #tela-jogo {
+	background-color: gray;
 	height: 65vh;
 	overflow: hidden;
 }
@@ -288,10 +303,18 @@ main h2 {
 	width: 70%;
 }
 
-#tela-jogo #img-cenario {
-	min-width: 100%;
+#upgrades-jogo > h2 {
+	font-size: 2vw;
+}
+
+#tela-jogo #cenario-container {
 	max-height: 100%;
-	vertical-align: middle;
+	position: relative;
+}
+
+#cenario-container #img-cenario {
+	width: 100%;
+	height: 100%;
 }
 
 #upgrades-jogo {
@@ -300,8 +323,6 @@ main h2 {
 	box-shadow: inset 0px 3px 5px black;
 	color: white;
 	padding: 1%;
-	display: flex;
-	align-items: center;
 }
 
 #upgrades-jogo > h2 {
@@ -377,7 +398,7 @@ main h2 {
 }
 
 .item img {
-	max-width: 20%;
+	max-width: 25%;
 }
 
 .item button, .item span {
@@ -399,12 +420,24 @@ main h2 {
 
 .ficha h2 {
 	text-align: center;
-	font-size: 4vw;
 }
 
 .ficha p {
 	text-align: justify;
 	font-size: 2vw;
+}
+
+.ficha button {
+	display: block;
+	margin: 0 auto;
+	background-color: transparent;
+	border: 1px solid lightgray;
+	font-weight: bold;
+	font-family: inherit;
+	box-shadow: 1px 1px 3px lightgrey;
+	padding: 2% 5%;
+	text-align: center;
+	cursor: pointer;
 }
 
 /*--- footer ---*/

@@ -7,8 +7,9 @@
 }
 
 #jogador-imagem {
-  max-width: 20%;
-  bottom: 50%;
+  max-width: 25%;
+  bottom: 0;
+  left: 35%;
 }
 
 #jogador-imagem:hover {

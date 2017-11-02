@@ -14,10 +14,12 @@
    MORTO: 'Morto'
  };
 
- const Situacao = {
-   ESTUDANTE: 'Estudante',
-   EMPREGADO: 'Empregado',
-   DESEMPREGADO: 'Desempregado'
+// contante que descreve a situação do personagem:
+const Situacao = {
+  NADA: 'Nada',
+  ESTUDANTE: 'Estudante',
+  EMPREGADO: 'Empregado',
+  DESEMPREGADO: 'Desempregado'
  };
 
 // Classe Item, usada para o que é comprado dentro do jogo.
@@ -92,35 +94,28 @@ class Jogador {
 
   constructor(jog = 'Person') {
     // Eu gostaria de eliminar esta repetição, mas não sei como fazer isto...
+    this.nome = jog;
+    this.idade = 1;
+    this.genero = '';
+    this.xp = 0;
+    this.limiteXPInicial = 10;
+    this.limiteXP = this.limiteXPInicial;
+    this.incrementoXP = 1;
+    this.dinheiro = 0;
+    this.incrementoDinheiro = 1;
+    this.itens = [];
+    this.faseVida = FasesDaVida.CRIANCA;
+    this.tipoItens = this.faseVida;
+    this.situacao = Situacao.ESTUDANTE;
+
+    // caso seja passado um objeto para o construtor:
     if (jog instanceof Object) {
-      this.nome = jog.nome;
-      this.idade = jog.idade;
-      this.genero = jog.genero;
-      this.xp = jog.xp;
-      this.limiteXPInicial = jog.limiteXPInicial;
-      this.limiteXP = jog.limiteXP;
-      this.incrementoXP = jog.incrementoXP;
-      this.dinheiro = jog.dinheiro;
-      this.incrementoDinheiro = jog.incrementoDinheiro;
-      this.itens = jog.itens;
-      this.faseVida = jog.faseVida;
-      this.tipoItens = jog.tipoItens;
-      this.situacao = jog.situacao;
-    } else {
-      this.nome = jog;
-      this.idade = 1;
-      this.genero = '';
-      this.xp = 0;
-      this.limiteXPInicial = 10;
-      this.limiteXP = this.limiteXPInicial;
-      this.incrementoXP = 1;
-      this.dinheiro = 0;
-      this.incrementoDinheiro = 1;
-      this.itens = [];
-      this.faseVida = FasesDaVida.CRIANCA;
-      this.tipoItens = this.faseVida;
-      this.situacao = Situacao.ESTUDANTE; // Este atributo serve para
+      for (let nomeProp of Object.getOwnPropertyNames(jog)) {
+        if (this.hasOwnProperty(nomeProp))
+          this[nomeProp] = jog[nomeProp];
+      }
     }
+    // a imagem sempre será essa:
     this.imagem = $('#jogador-imagem');
   }
 
@@ -157,21 +152,20 @@ class Jogador {
       fichas = fichasCrianca;
       break;
       case FasesDaVida.ADOLESCENTE:
-      fichas = fichasAdolesc;
+      fichas = fichasAdolescente;
       break;
       case FasesDaVida.ADULTO:
-      fichas = fichasAdulto;
-      break;
       case FasesDaVida.IDOSO:
-      fichas = fichasIdoso;
+      fichas = fichasAdulto;
       break;
     }
 
     for (let ficha of fichas)
-    if (ficha.testaProbabilidade()) {
-      ficha.exibir();
-      ficha.aplicaEfeito(this);
-    }
+      if (ficha.testaProbabilidade()) {
+        ficha.exibir();
+        ficha.aplicaEfeito(this);
+        break;
+      }
 
   }
 
@@ -252,12 +246,14 @@ class EfeitoJogador {
 // Classe Ficha, usada para as situações aleatórias que surgem durante a vida do jogador.
 class Ficha extends EfeitoJogador {
 
-  constructor(mensagem, tipoAcontecimento = '', tipoEfeito, efeito, probabilidade = []) {
+  constructor(mensagem, tipoAcontecimento = '', tipoEfeito,
+    efeito, probabilidade = [], fase = '') {
 
     super(mensagem, tipoEfeito, efeito);
 
     this.tipoAcontecimento = tipoAcontecimento;
     this.probabilidade = probabilidade;
+    this.fase = fase;
 
   }
 
@@ -265,8 +261,8 @@ class Ficha extends EfeitoJogador {
 
     let minimo = this.probabilidade[0],
         maximo = this.probabilidade[1],
-        numAleatorio = Math.floor((Math.random() * (maximo - minimo + 1)) + minimo),
         // nesse caso, tanto o mínimo quanto o máximo poderão ser o número aleatório
+        numAleatorio = Math.floor((Math.random() * (maximo - minimo + 1)) + minimo),
         numAux = minimo;
 
     // o número auxiliar muda de valor e é comparado com o número aleatório 'minimo' vezes:
@@ -284,6 +280,7 @@ class Ficha extends EfeitoJogador {
         $tituloEl = $('<h2></h2>').text(this.tipoAcontecimento),
         $mensagemEl = $('<p></p>').text(this.mensagem),
         $efeitoEl = $('<p></p>'),
+        $botaoOkEl = $('<button></button>').text('OK'),
         cor = {
           color: (this.tipoAcontecimento === 'Azar')
             ? 'rgb(255, 68, 68)' : 'rgb(12, 199, 14)'
@@ -292,10 +289,15 @@ class Ficha extends EfeitoJogador {
     $tituloEl.css(cor);
     $efeitoEl.css(cor);
     $efeitoEl.text(((this.efeito > 0) ? '+' : '') + this.efeito + this.tipoEfeito);
+    $botaoOkEl.on('click', function() {
+      $('.ficha').remove();
+      $('#aux').trigger('click');
+    });
 
     $fichaEl.append($tituloEl);
     $fichaEl.append($mensagemEl);
     $fichaEl.append($efeitoEl);
+    $fichaEl.append($botaoOkEl);
     $fichaEl.addClass('ficha');
     let $auxEl = $('#aux');
     $auxEl.show();
@@ -307,9 +309,8 @@ class Ficha extends EfeitoJogador {
   }
 
 }
-
 // Classe Upgrade, a qual será implementada caso haja tempo suficiente:
-class Upgrade {
+class Upgrade extends EfeitoJogador {
 
   constructor(nomeId = '') {
     this.imagem = $('#' + nomeId + '');
@@ -323,44 +324,48 @@ class Upgrade {
 
 /* Outras declarações: */
 
-var todosOsItens = { // Talvez seja bom criar um arquivo .json com os dados.
-
-  // Criança e Adolescente:
-  bola: new Item('Bola', 10, FasesDaVida.CRIANCA),
-  bicicleta: new Item('Bicicleta de Brinquedo', 50, FasesDaVida.CRIANCA),
-  carrinho: new Item('Carrinho de Brinquedo', 40, FasesDaVida.CRIANCA),
-  boneco: new Item('Boneco', 20, FasesDaVida.CRIANCA),
-  chocalho: new Item('Chocalho', 30, FasesDaVida.CRIANCA),
-  peteca: new Item('Peteca', 10, FasesDaVida.CRIANCA),
-  cubos: new Item('Cubos de Brinquedo', 15, FasesDaVida.CRIANCA),
-  cachorro: new Item('Cachorro', 200, FasesDaVida.ADOLESCENTE),
-  gato: new Item('Gato', 200, FasesDaVida.ADOLESCENTE),
-  mp3: new Item('MP3 Player', 150, FasesDaVida.ADOLESCENTE),
-  celular: new Item('Celular', 700, FasesDaVida.ADOLESCENTE),
-  videogame: new Item('Video-game', 1000, FasesDaVida.ADOLESCENTE),
-  computador: new Item('Computador', 1500, FasesDaVida.ADOLESCENTE),
-  // Adulto e Idoso:
-  sofa: new Item('Sofá', 500, FasesDaVida.ADULTO),
-  tv: new Item('Televisão', 1500, FasesDaVida.ADULTO),
-  carro: new Item('Carro', 20000, FasesDaVida.ADULTO),
-  casa: new Item('Casa', 150000, FasesDaVida.ADULTO),
-  eletrodomesticos: new Item('Eletrodomésticos', 10000, FasesDaVida.ADULTO)
-
-};
-
-// arrays com as fichas (cujos dados estarão em um arquivo .json):
-var todasAsFichas = [],
-    fichasCrianca,
-    fichasAdolesc,
-    fichasAdulto,
-    fichasIdoso;
+// criação dos itens:
+var todosOsItens = {};
+$.getJSON('json/itens.json', function(dados) {
+  /* Em vez de atribuir dados a todosOsItens, optei por criar vários objetos Item
+  para facilitar, caso precise, a adição de métodos */
+  for (let k in dados)
+    todosOsItens[k] = new Item(dados[k].nome, dados[k].preco, dados[k].tipo);
+});
 
 // criação das fichas:
-$.getJSON('fichas.json', function(dados) {
-  let fichas = dados.fichas;
+var fichasCrianca = [],
+    fichasAdolescente = [],
+    fichasAdulto = [],
+    fichasIdoso = [];
+
+$.getJSON('json/fichas.json', function(dados) {
+
+  let todasAsFichas = [],
+      fichas = dados.fichas;
   for (let ficha of fichas) {
-    todasAsFichas.push(new Ficha(ficha.mensagem, ficha.tipoAcontecimento,
-      ficha.tipoEfeito, ficha.efeito, ficha.probabilidade));
+    if (ficha.fase instanceof Array)
+      for (let i = 0; i < ficha.fase.length; i++)
+        todasAsFichas.push(new Ficha(ficha.mensagem, ficha.tipoAcontecimento,
+          ficha.tipoEfeito, ficha.efeito[i], ficha.probabilidade[i], ficha.fase[i]));
+    else
+      todasAsFichas.push(new Ficha(ficha.mensagem, ficha.tipoAcontecimento,
+        ficha.tipoEfeito, ficha.efeito, ficha.probabilidade, ficha.fase));
   }
-  fichasCrianca = todasAsFichas.slice(0, 6);
+
+  for (let ficha of todasAsFichas) {
+    switch (ficha.fase) {
+      case FasesDaVida.CRIANCA:
+      fichasCrianca.push(ficha);
+      break;
+      case FasesDaVida.ADOLESCENTE:
+      fichasAdolescente.push(ficha);
+      break;
+      case FasesDaVida.ADULTO:
+      case FasesDaVida.IDOSO:
+      fichasAdulto.push(ficha);
+      break;
+    }
+  }
+
 });

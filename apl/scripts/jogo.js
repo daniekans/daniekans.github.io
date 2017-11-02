@@ -52,7 +52,6 @@ $(function() {
     Item.atzItens(todosOsItens, jogador);
 
   }
-
   // Carregamento de jogador existente, caso exista:
   let tempJogador = new Jogador(JSON.parse(localStorage.getItem('Jogador')));
   if (tempJogador && tempJogador.nome !== null) {

@@ -18,8 +18,7 @@ $(function() {
 	});
 
 	$auxEl.on('click', function() {
-		if ($('#menu-criacao-conta').css('display') === 'none') {
-			$('.ficha').remove();
+		if ($('#menu-criacao-conta').css('display') === 'none' && !$('.ficha').length) {
 			$auxEl.removeClass('escuro');
 			setTimeout(function() {
 				$auxEl.hide();
