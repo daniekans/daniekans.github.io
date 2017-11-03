@@ -29,26 +29,50 @@ $(function() {
     $auxEl.removeClass('escuro');
     $auxEl.removeClass('ocupa-espaco');
 
-    $('#nome-span').text(jogador.nome);
-    $('#idade-span').text(jogador.idade);
-    $('#dinheiro-span').text('R$' + jogador.dinheiro);
+    let $nomeSpanEl = $('#nome-span');
+    let $idadeSpanEl = $('#idade-span');
+    let $dinheiroSpanEl = $('#dinheiro-span');
+    $nomeSpanEl.text(jogador.nome);
+    $idadeSpanEl.text(jogador.idade);
+    $dinheiroSpanEl.text('R$' + jogador.dinheiro);
     $('title').text(jogador.nome + '\'' + (jogador.nome.endsWith('s')) ? '' : 's Life');
 
     // Clique na imagem do personagem e efeitos:
-    let $progressEl = $('#barra-xp');
-    $progressEl.attr('max', jogador.limiteXP);
-    $progressEl.val(0);
+    function atzBarraXP() {
+      let larguraAtual = (jogador.xp + jogador.limiteXPInicial - jogador.limiteXP)
+        * 100 / jogador.limiteXPInicial;
+        $('#barra-xp').css({
+          width: larguraAtual + '%'
+        });
+    }
 
-    $('#conteudo').on('click', '#jogador-imagem', function () {
+    $('#conteudo').on('click', '#jogador-imagem', function (evt) {
       if (jogador) {
         jogador.aumentaXP();
         jogador.aumentaDinheiro();
-        $('#idade-span').text(jogador.idade);
-        $('#dinheiro-span').text('R$' + jogador.dinheiro);
-        $progressEl.val($progressEl.val() + jogador.incrementoXP);
+        $idadeSpanEl.text(jogador.idade);
+        $dinheiroSpanEl.text('R$' + jogador.dinheiro);
+        atzBarraXP();
+
+        // mostra o XP ganho no clique:
+        let $spanXPEl = $('<span></span>')
+          .text('+' + jogador.incrementoXP + 'XP')
+          .addClass('span-xp');
+        $spanXPEl.css({
+          left: evt.pageX,
+          top: evt.pageY,
+        });
+        $spanXPEl.animate({
+          'top': parseInt($spanXPEl.css('top')) - 50 + 'px',
+          'opacity': '0.7',
+          'transform': 'scale(0.8)'
+        }, 300);
+        $spanXPEl.fadeOut(300);
+        $('body').append($spanXPEl);
       }
     });
 
+    atzBarraXP();
     Item.atzItens(todosOsItens, jogador);
 
   }
@@ -61,7 +85,7 @@ $(function() {
     // ...
   } else {
 
-    // Início do jogo:
+    // botão para iniciar o jogo:
     $('#botao-iniciar-jogo').on('click', function() {
 
       let $persSelecionadoEl = $('.selecionado');
@@ -86,12 +110,15 @@ $(function() {
 
   }
 
-  // apagar os dados
-  $('#li-apagar-dados').on('click', function() {
+  // apagar os dados e salvamento do jogo:
+  function apagaDados() {
     localStorage.clear();
     jogador = null;
     location.reload();
-  });
+  }
+
+  $('#li-apagar-dados').on('click', apagaDados);
+  $('#botao-recomecar').on('click', apagaDados);
 
   $(window).on('unload', function () {
     if (jogador)

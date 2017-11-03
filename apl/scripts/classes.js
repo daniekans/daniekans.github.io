@@ -16,11 +16,18 @@
 
 // contante que descreve a situação do personagem:
 const Situacao = {
-  NADA: 'Nada',
+  NADA: 'Nada', // '-'
   ESTUDANTE: 'Estudante',
   EMPREGADO: 'Empregado',
   DESEMPREGADO: 'Desempregado'
- };
+};
+
+// função para efeito sonoros:
+function playSfx(nomeAudio) {
+  $('#efeito-sonoro')
+    .attr('src', 'audio/' + nomeAudio + '')
+    .trigger('play');
+}
 
 // Classe Item, usada para o que é comprado dentro do jogo.
 class Item {
@@ -43,39 +50,37 @@ class Item {
 
       let nomeProp = parItem[0];
       let item = parItem[1];
-      if (item.tipo === jogador.tipoItens) {
-        let $itemEl = $('<div></div>');
-        let $itemImgEl = $('<img></img>');
-        let $itemNomeEl = $('<h3></h3>').text(item.nome);
-        let $itemPrecoEl = $('<span></span>').text('Preço: R$' + item.preco);
-        let $btComprarEl = $('<button></button>').text('COMPRAR');
+      let $itemEl = $('<div></div>');
+      let $itemImgEl = $('<img></img>');
+      let $itemNomeEl = $('<h3></h3>').text(item.nome);
+      let $itemPrecoEl = $('<span></span>').text('Preço: R$' + item.preco);
+      let $btComprarEl = $('<button></button>').text('COMPRAR');
 
-        $itemImgEl.attr('src', ('imgs/' + nomeProp + '.png')); // Ajustar depois
-        $itemEl.addClass('item');
-        // acréscimos:
-        $itemEl.append($itemNomeEl);
-        $itemEl.append($itemImgEl);
+      $itemImgEl.attr('src', ('imgs/' + nomeProp + '.png')); // Ajustar depois
+      $itemEl.addClass('item');
+      // acréscimos:
+      $itemEl.append($itemNomeEl);
+      $itemEl.append($itemImgEl);
 
-        // adiciona corretamente os itens:
-        if (jogador.itens.includes(item)) {
-          $pertencesEl.append($itemEl);
-        } else {
-          $itemEl.append($itemPrecoEl);
-          $itemEl.append($btComprarEl);
-          $itemEl.append($('<div></div>').addClass('clear'));
-          $btComprarEl.on('click', function() {
-            if (jogador.dinheiro >= item.preco) {
-              // efeito sonoro de acordo com a disponibilidade...
-              jogador.itens.push(item);
-              jogador.dinheiro -= item.preco;
-              Item.atzItens(todosOsItens, jogador);
-              $('#dinheiro-span').text(jogador.dinheiro);
-            } else {
-
-            }
-          });
-          $lojaEl.append($itemEl);
-        }
+      // adiciona corretamente os itens:
+      if (jogador.itens.includes(item)) {
+        $pertencesEl.append($itemEl); // Os pertences permanecem até o fim...
+      } else if (item.tipo === jogador.tipoItens) {
+        $itemEl.append($itemPrecoEl);
+        $itemEl.append($btComprarEl);
+        $itemEl.append($('<div></div>').addClass('clear'));
+        $btComprarEl.on('click', function() {
+          if (jogador.dinheiro >= item.preco) {
+            playSfx('comprado.wav');
+            jogador.itens.push(item);
+            jogador.dinheiro -= item.preco;
+            Item.atzItens(todosOsItens, jogador);
+            $('#dinheiro-span').text(jogador.dinheiro);
+          } else {
+            playSfx('sem-permissao.wav');
+          }
+        });
+        $lojaEl.append($itemEl);
       }
 
     });
@@ -103,10 +108,14 @@ class Jogador {
     this.incrementoXP = 1;
     this.dinheiro = 0;
     this.incrementoDinheiro = 1;
+    this.felicidade = 20;
+    this.inteligencia = 20;
+    this.amor = 10;
     this.itens = [];
     this.faseVida = FasesDaVida.CRIANCA;
     this.tipoItens = this.faseVida;
     this.situacao = Situacao.ESTUDANTE;
+    this.imagemId = '';
 
     // caso seja passado um objeto para o construtor:
     if (jog instanceof Object) {
@@ -115,8 +124,6 @@ class Jogador {
           this[nomeProp] = jog[nomeProp];
       }
     }
-    // a imagem sempre será essa:
-    this.imagem = $('#jogador-imagem');
   }
 
   aumentaIdade() {
@@ -142,6 +149,10 @@ class Jogador {
         break;
       case 100:
         this.faseVida = FasesDaVida.MORTO;
+        $('#fim-de-jogo').fadeIn(300);
+        let $auxEl = $('#aux');
+        $auxEl.show();
+        $auxEl.addClass('escuro');
         break;
     }
 
@@ -166,6 +177,8 @@ class Jogador {
         ficha.aplicaEfeito(this);
         break;
       }
+
+    playSfx('cresceu.wav');
 
   }
 
@@ -217,24 +230,40 @@ class EfeitoJogador {
 
   aplicaEfeito(jogador) {
 
+     /* Foi necessário atribuir o 'this' mais externo a uma variável.
+        A função de seta não funcionaria muito bem aqui... */
+    let self = this;
+    function modificaProp(propriedade) {
+        if (String(self.efeito).startsWith('x'))
+          jogador[propriedade] *= self.efeito;
+        else
+          jogador[propriedade] += self.efeito;
+    }
+
     switch (this.tipoEfeito) {
       case '$':
-        jogador.dinheiro += this.efeito;
+        modificaProp('dinheiro');
         break;
       case ':)':
         if (this.mensagem.includes('morreu'))
           this.probabilidade = [0, 0];
-        jogador.felicidade += this.efeito;
+        modificaProp('felicidade');
         break;
       case '@':
-        jogador.inteligencia += this.efeito;
+        modificaProp('inteligencia');
         break;
       case 's2':
-        jogador.amor += this.efeito;
+        modificaProp('amor');
+        break;
+      case 'Situacao':
+        jogador.Situacao = this.efeito;
         break;
       case 'x_x':
         jogador.faseVida = FasesDaVida.MORTO;
-        // ...
+        $('#fim-de-jogo').fadeIn(300);
+        let $auxEl = $('#aux');
+        $auxEl.show();
+        $auxEl.addClass('escuro');
         Item.atzItens(todosOsItens, jogador);
         break;
     }
@@ -281,6 +310,7 @@ class Ficha extends EfeitoJogador {
         $mensagemEl = $('<p></p>').text(this.mensagem),
         $efeitoEl = $('<p></p>'),
         $botaoOkEl = $('<button></button>').text('OK'),
+        $auxEl = $('#aux'),
         cor = {
           color: (this.tipoAcontecimento === 'Azar')
             ? 'rgb(255, 68, 68)' : 'rgb(12, 199, 14)'
@@ -291,7 +321,7 @@ class Ficha extends EfeitoJogador {
     $efeitoEl.text(((this.efeito > 0) ? '+' : '') + this.efeito + this.tipoEfeito);
     $botaoOkEl.on('click', function() {
       $('.ficha').remove();
-      $('#aux').trigger('click');
+      $auxEl.trigger('click');
     });
 
     $fichaEl.append($tituloEl);
@@ -299,10 +329,9 @@ class Ficha extends EfeitoJogador {
     $fichaEl.append($efeitoEl);
     $fichaEl.append($botaoOkEl);
     $fichaEl.addClass('ficha');
-    let $auxEl = $('#aux');
+
     $auxEl.show();
     $auxEl.addClass('escuro');
-    // bloquear eventos de mouse por um pequeno tempo
 
     $('body').append($fichaEl);
 
@@ -312,13 +341,13 @@ class Ficha extends EfeitoJogador {
 // Classe Upgrade, a qual será implementada caso haja tempo suficiente:
 class Upgrade extends EfeitoJogador {
 
-  constructor(nomeId = '') {
-    this.imagem = $('#' + nomeId + '');
+  constructor(imagemId = '', mensagem, tipoEfeito, efeito) {
+    super(mensagem, tipoEfeito, efeito);
+
+    this.imagem = $('#' + imagemId + '');
   }
 
-  aplicaEfeito(jogador) {
-
-  }
+  // ...
 
 }
 

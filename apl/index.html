@@ -7,8 +7,6 @@
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style/estilo-geral.css">
     <link rel="stylesheet" href="style/itens-e-jogador.css">
-    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline|Indie+Flower" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
     <link rel="shortcut icon" href="imgs/life.ico">
     <title>A Person's Life</title>
   </head>
@@ -19,8 +17,9 @@
       <div id="aux" class="escuro ocupa-espaco"></div>
       <!-- O header terá o nome do jogo seguido do nome, idade e dinheiro do jogador -->
       <header>
-        <img id="botao-menu-lateral" src="imgs/configuracoes2.png">
+        <img id="icone-menu-lateral" src="imgs/configuracoes.png">
         <img id="icone-info" src="imgs/informacao.gif">
+        <img id="icone-audio" src="imgs/com-audio.png">
         <section id="atributos-jogador">
           <span>Nome: </span><span id="nome-span"></span>
           <span>Idade: </span><span id="idade-span"></span>
@@ -30,43 +29,49 @@
 
       <!-- O main conterá todo o contexto gráfico e interativo do jogo: -->
       <main>
-        <div id="itens-jogo">
+        <section id="itens-jogo">
           <h2>Loja</h2>
           <section id="loja">
-
+            <!-- Aqui fica os itens disponíveis para o jogador comprar -->
           </section>
           <hr>
           <h2>Pertences</h2>
           <section id="pertences">
-            <!-- Não é necessário uma div aqui... -->
             <!-- Aqui fica os itens que o jogador compra -->
           </section>
           <div class="clear"></div>
-        </div>
-        <div id="tela-jogo">
+        </section>
+        <section id="tela-jogo">
           <div id= "cenario-container">
             <img id="img-cenario" src="imgs/quarto-fundo-branco.png" alt="Cenário para o personagem ">
             <!-- Restante das imagens, com position absolute: -->
             <img id="jogador-imagem" src="imgs/boneco.png" alt="">
           </div>
-        </div>
-        <div id="barra-xp">
-
-        </div>
-        <div id="upgrades-jogo">
+        </section>
+        <section id="xp-jogo">
+          <h2>XP</h2>
+          <span id="jogador-xp"></span>
+          <div id="container-xp">
+            <div id="barra-xp">
+              <!-- Aqui é mostrado o quanto de XP falta para aumentar a idade -->
+            </div>
+          </div>
+          <span id="jogador-limite-xp"></span>
+        </section>
+        <section id="upgrades-jogo">
           <h2>Upgrades</h2>
           <p>Sem upgrades ainda... :'(</p>
-        </div>
+        </section>
       </main> <!-- fim do main -->
 
       <!-- Talvez no footer haverá lgumas informações de contato, logo da "empresa", etc -->
       <footer>
-        <h2>Obrigado por jogar :D</h2>
-        <h4>Contatos:</h4>
+        <h2>Obrigado por jogar</h2>
+        <img id="apl-logo" src="imgs/apl-logo.png" alt="Logo do A Person's Life">
+        <h2>!</h2>
       </footer> <!-- fim do footer -->
 
       <div id="menu-criacao-conta">
-        <!-- ... -->
         <h2>Crie o seu personagem!</h2>
         <label for="input-nome">Digite o nome do personagem:</label>
         <input type="text" id="input-nome" placeholder="Ex: Joãozinho">
@@ -90,48 +95,75 @@
           </section>
         </div>
         <button id="botao-iniciar-jogo">Iniciar Jogo!</button>
-      </div>
+      </div> <!-- fim do #menu-criacao-conta -->
+
+      <div id="fim-de-jogo">
+        <h2>Fim de Jogo!</h2>
+        <p>Infelizmente, sua vida chegou ao fim. Esta foi a sua situação final:</p>
+        <section id="atributos-finais">
+
+        </section>
+        <button id="botao-recomecar">Recomeçar</button>
+      </div> <!-- fim do #fim-de-jogo-->
 
     </div> <!-- fim do #conteudo -->
 
-    <!-- No caso de deletar, mutar áudio, ver as informações sobre os criadores (talvez...), etc, existirá uma div lateral (inicialmente invisível), como um menu. -->
     <div id="menu-lateral">
       <h2>Menu</h2>
       <ul id="lista-opcoes">
         <li id="li-instrucoes">Instruções</li>
         <li id="li-apagar-dados">Apagar dados da conta</li>
       </ul>
-    </div>
+    </div> <!-- fim do menu lateral -->
     <!-- Janela modal com as informações sobre os criadores e créditos: -->
     <div id="janela-info">
-        <h2 id="creators-info-titulo">INFORMAÇÕES SOBRE OS CRIADORES</h2>
-        <div ="only-creators">
-          <article class="bloco-criador">
-            <img src="imgs/bruno.jpg">
-            <h3>Bruno Souza</h3>
-            <p>deixa para depois ;)</p>
-            <div class="clear"></div>
-          </article>
-          <article class="bloco-criador">
-            <img src="imgs/daniel.jfif">
-            <h3>Daniel Franco</h3>
-            <p>deixa para depois ;)</p>
-            <div class="clear"></div>
-          </article>
-          <article class="bloco-criador">
-            <img src="imgs/gabriel.jpg">
-            <h3>Gabriel Cruz</h3>
-            <p>deixa para depois ;)</p>
-            <div class="clear"></div>
-          </article>
-          <article class="bloco-criador">
-            <img src="imgs/batista.jpg">
-            <h3>Guilherme Batista</h3>
-            <p>deixa para depois ;)</p>
-            <div class="clear"></div>
-          </article>
+      <h2>INFORMAÇÕES SOBRE OS CRIADORES</h2>
+      <div id="only-creators">
+        <article class="bloco-criador">
+          <img src="imgs/bruno.jpg">
+          <h3>Bruno Souza</h3>
+          <p>
+            Utilizou suas habilidades com HTML para estruturar a página
+          </p>
+          <div class="clear"></div>
+        </article>
+        <article class="bloco-criador">
+          <img src="imgs/daniel.jpg">
+          <h3>Daniel Franco</h3>
+          <p>
+            Responsável pelo comportamento e funcionamento do jogo.
+          </p>
+          <div class="clear"></div>
+        </article>
+        <article class="bloco-criador">
+          <img src="imgs/gabriel.jpg">
+          <h3>Gabriel Cruz</h3>
+          <p>
+            Artista que criou as imagens utilizadas pelo jogo e produtor da história.
+          </p>
+          <div class="clear"></div>
+        </article>
+        <article class="bloco-criador">
+          <img src="imgs/batista.jpg">
+          <h3>Guilherme Batista</h3>
+          <p>Estilista fundamental da página</p>
+          <div class="clear"></div>
+        </article>
       </div>
+      <h3>Mais créditos:</h3>
+      <ul>
+        <li>Efeitos sonoros: Freesound.org</li>
+        <li>Música de fundo: "Home" – Undertale, por Toby Fox</li>
+        <li>Arte da logomarca: Logomaker.com</li>
+      </ul>
     </div>
+
+    <audio id="musica-de-fundo" src="audio/home.mp3" autoplay loop>
+      O seu navegador não suporta este tipo de áudio
+    </audio>
+    <audio id="efeito-sonoro">
+      O seu navegador não suporta este tipo de áudio
+    </audio>
 
     <script src="scripts/jquery-3.2.1.min.js"></script>
     <script src="scripts/classes.js"></script>

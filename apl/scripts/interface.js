@@ -8,8 +8,9 @@ $(function() {
 	// Handlers para janelas à parte do conteúdo principal:
 	let $auxEl = $('#aux');
 	let $infoEl = $('#janela-info');
+	let $headerEl = $('header');
 
-	$('header').on('click', '#icone-info', function() {
+	$headerEl.on('click', '#icone-info', function() {
 		if (!$auxEl.hasClass('escuro')) {
 			$auxEl.show();
 			$auxEl.addClass('escuro');
@@ -18,17 +19,33 @@ $(function() {
 	});
 
 	$auxEl.on('click', function() {
-		if ($('#menu-criacao-conta').css('display') === 'none' && !$('.ficha').length) {
+		if ($('#menu-criacao-conta').css('display') === 'none'
+				&& $('#fim-de-jogo').css('display') === 'none'
+				&& !$('.ficha').length) {
 			$auxEl.removeClass('escuro');
-			setTimeout(function() {
-				$auxEl.hide();
-			}, 200);
+			setTimeout(() => $auxEl.hide(), 200);
 			$infoEl.removeClass('ocupa-espaco');
 		}
 	});
 
-	$('header').on('click', '#botao-menu-lateral', function() {
+	$('header').on('click', '#icone-menu-lateral', function() {
 		$('body').toggleClass('menu-lateral-ativo');
+		playSfx('menu-ativo.wav');
+	});
+
+	// áudios do jogo:
+	$headerEl.on('click', '#icone-audio', function() {
+
+		let $audiosEl = $('audio');
+
+		if ($audiosEl.prop('muted')) {
+			$audiosEl.prop('muted', false);
+			$(this).attr('src', 'imgs/com-audio.png');
+		}	else {
+			$audiosEl.prop('muted', true);
+			$(this).attr('src', 'imgs/sem-audio.svg');
+		}
+
 	});
 
 });
