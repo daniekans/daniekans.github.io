@@ -38,7 +38,7 @@ class Item {
     this.tipo = tipo;
   }
 
-  static atzItens(todosOsItens, jogador) {
+  static atualizaItens(todosOsItens, jogador) {
 
     // Loja e pertences:
     let $lojaEl = $('#loja');
@@ -51,7 +51,7 @@ class Item {
       let nomeProp = parItem[0];
       let item = parItem[1];
       let $itemEl = $('<div></div>');
-      let $itemImgEl = $('<img></img>');
+      let $itemImgEl = $('<img>');
       let $itemNomeEl = $('<h3></h3>').text(item.nome);
       let $itemPrecoEl = $('<span></span>').text('Preço: R$' + item.preco);
       let $btComprarEl = $('<button></button>').text('COMPRAR');
@@ -63,23 +63,27 @@ class Item {
       $itemEl.append($itemImgEl);
 
       // adiciona corretamente os itens:
-      if (jogador.itens.includes(item)) {
+      if (jogador.itens.find(jogItem => jogItem.nome === item.nome)) {
         $pertencesEl.append($itemEl); // Os pertences permanecem até o fim...
       } else if (item.tipo === jogador.tipoItens) {
         $itemEl.append($itemPrecoEl);
         $itemEl.append($btComprarEl);
         $itemEl.append($('<div></div>').addClass('clear'));
+
         $btComprarEl.on('click', function() {
           if (jogador.dinheiro >= item.preco) {
             playSfx('comprado.wav');
             jogador.itens.push(item);
             jogador.dinheiro -= item.preco;
-            Item.atzItens(todosOsItens, jogador);
             $('#dinheiro-span').text(jogador.dinheiro);
+            let $imgItemCenarioEl = $(`img[src*="${nomeProp}"]`);
+            $imgItemCenarioEl.animate({ 'opacity': '1' }, 200); // fade() não está dando certo
+            Item.atualizaItens(todosOsItens, jogador);
           } else {
             playSfx('sem-permissao.wav');
           }
         });
+
         $lojaEl.append($itemEl);
       }
 
@@ -115,14 +119,13 @@ class Jogador {
     this.faseVida = FasesDaVida.CRIANCA;
     this.tipoItens = this.faseVida;
     this.situacao = Situacao.ESTUDANTE;
-    this.imagemId = '';
+    this.imagemSrc = '';
 
     // caso seja passado um objeto para o construtor:
     if (jog instanceof Object) {
-      for (let nomeProp of Object.getOwnPropertyNames(jog)) {
+      for (let nomeProp of Object.getOwnPropertyNames(jog))
         if (this.hasOwnProperty(nomeProp))
           this[nomeProp] = jog[nomeProp];
-      }
     }
   }
 
@@ -135,14 +138,14 @@ class Jogador {
         this.faseVida = FasesDaVida.ADOLESCENTE;
         this.tipoItens = this.faseVida;
         this.incrementoDinheiro = 5;
-        Item.atzItens(todosOsItens, this);
+        Item.atualizaItens(todosOsItens, this);
         break;
       case 18:
         this.faseVida = FasesDaVida.ADULTO;
         this.tipoItens = this.faseVida;
         this.incrementoDinheiro = 15;
         this.incrementoXP = 3;
-        Item.atzItens(todosOsItens, this)
+        Item.atualizaItens(todosOsItens, this)
         break;
       case 65:
         this.faseVida = FasesDaVida.IDOSO;
@@ -264,7 +267,7 @@ class EfeitoJogador {
         let $auxEl = $('#aux');
         $auxEl.show();
         $auxEl.addClass('escuro');
-        Item.atzItens(todosOsItens, jogador);
+        Item.atualizaItens(todosOsItens, jogador);
         break;
     }
 
@@ -345,6 +348,10 @@ class Upgrade extends EfeitoJogador {
     super(mensagem, tipoEfeito, efeito);
 
     this.imagem = $('#' + imagemId + '');
+  }
+
+  static atualizaUpgrades() {
+
   }
 
   // ...

@@ -32,17 +32,30 @@ $(function() {
     let $nomeSpanEl = $('#nome-span');
     let $idadeSpanEl = $('#idade-span');
     let $dinheiroSpanEl = $('#dinheiro-span');
+
     $nomeSpanEl.text(jogador.nome);
     $idadeSpanEl.text(jogador.idade);
-    $dinheiroSpanEl.text('R$' + jogador.dinheiro);
+    $dinheiroSpanEl.text(`R$${jogador.dinheiro}`);
     $('title').text(jogador.nome + '\'' + (jogador.nome.endsWith('s')) ? '' : 's Life');
+
+    // carregamento das imagens dos pertences
+    $('#jogador-imagem').attr('src', jogador.imagemSrc);
+    $('#img-cenario').attr('src', `imgs/quarto-${jogador.genero}.png`);
+    let $cenarioEl = $('#cenario-container');
+    for (let nomeProp in todosOsItens) {
+      $cenarioEl.append($('<img>').attr('src', `imgs/${nomeProp}.png`));
+      if (jogador.itens.find(jogItem => jogItem.nome === todosOsItens[nomeProp].nome)) {
+        let $imgItemCenarioEl = $(`img[src*="${nomeProp}"]`);
+        $imgItemCenarioEl.animate({ 'opacity': '1' }, 200);
+      }
+    }
 
     // Clique na imagem do personagem e efeitos:
     function atzBarraXP() {
       let larguraAtual = (jogador.xp + jogador.limiteXPInicial - jogador.limiteXP)
         * 100 / jogador.limiteXPInicial;
         $('#barra-xp').css({
-          width: larguraAtual + '%'
+          width: `${larguraAtual}%`
         });
     }
 
@@ -56,7 +69,7 @@ $(function() {
 
         // mostra o XP ganho no clique:
         let $spanXPEl = $('<span></span>')
-          .text('+' + jogador.incrementoXP + 'XP')
+          .text(`+${jogador.incrementoXP}XP`)
           .addClass('span-xp');
         $spanXPEl.css({
           left: evt.pageX,
@@ -68,12 +81,13 @@ $(function() {
           'transform': 'scale(0.8)'
         }, 300);
         $spanXPEl.fadeOut(300);
+        setTimeout(() => $spanXPEl.remove(), 600);
         $('body').append($spanXPEl);
       }
     });
 
     atzBarraXP();
-    Item.atzItens(todosOsItens, jogador);
+    Item.atualizaItens(todosOsItens, jogador);
 
   }
   // Carregamento de jogador existente, caso exista:
@@ -92,14 +106,13 @@ $(function() {
 
       if ($nomeEl.val().replace(' ', '') === '') {
         alert('Digite um nome válido!');
-      // } else if (!$persSelecionadoEl.length) {
-      //   alert('Selecione o modelo primeiro!');
+      } else if (!$persSelecionadoEl.length) {
+        alert('Selecione o modelo primeiro!');
       } else {
-
         // instanciação do novo jogador:
         jogador = new Jogador($nomeEl.val());
-        //jogador.imagem.attr('src', $persSelecionadoEl.find('img').attr('src'));
-        //jogador.genero = $persSelecionadoEl.data('genero');
+        jogador.genero = $persSelecionadoEl.data('genero');
+        jogador.imagemSrc = $persSelecionadoEl.find('img').attr('src');
         iniciarJogo();
 
         let $menuCriaConta = $('#menu-criacao-conta');
@@ -110,7 +123,7 @@ $(function() {
 
   }
 
-  // apagar os dados e salvamento do jogo:
+  // apagamento os dados e salvamento do jogo:
   function apagaDados() {
     localStorage.clear();
     jogador = null;

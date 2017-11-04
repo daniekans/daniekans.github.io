@@ -177,6 +177,32 @@ div#menu-criacao-conta {
 	text-decoration: underline;
 }
 
+#escolha-genero {
+	display: flex;
+  align-items: baseline;
+  justify-content: space-around;
+	margin: 2% 0;
+	padding: 1%;
+}
+
+#escolha-genero img {
+	min-width: 100%;
+	image-rendering: pixelated;
+}
+
+#escolha-genero section {
+	padding: 2%;
+	cursor: pointer;
+	position: relative;
+	transition: bottom 100ms ease-in;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.selecionado {
+	bottom: 20px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
 #botao-iniciar-jogo {
 	color: green;
 	box-shadow: 0px 2px 5px green;
@@ -320,11 +346,13 @@ main h2 {
 #tela-jogo #cenario-container {
 	max-height: 100%;
 	position: relative;
+	min-width: 100%;
 }
 
 #cenario-container #img-cenario {
 	width: 100%;
 	height: 100%;
+	image-rendering: pixelated;
 }
 
 #xp-jogo {

@@ -2,16 +2,28 @@
  * Trabalho de Web – INF-1A – CEFET-MG
  */
 
+#tela-jogo img {
+  image-rendering: pixelated;
+}
+
 #tela-jogo img:not(#img-cenario) {
   position: absolute;
 }
 
 #jogador-imagem {
-  max-width: 25%;
+  width: 20%;
   bottom: 0;
   left: 35%;
+  z-index: 2;
 }
 
 #jogador-imagem:hover {
   cursor: pointer;
+}
+
+#cenario-container img:not(#jogador-imagem):not(#img-cenario) {
+  top: 0;
+  min-width: 100%;
+  max-height: 100%;
+  opacity: 0;
 }

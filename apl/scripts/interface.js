@@ -5,11 +5,13 @@
 
 $(function() {
 
-	// Handlers para janelas à parte do conteúdo principal:
+	/* Handlers para janelas à parte do conteúdo principal */
+
 	let $auxEl = $('#aux');
 	let $infoEl = $('#janela-info');
 	let $headerEl = $('header');
 
+	// ícone para a janela de informações:
 	$headerEl.on('click', '#icone-info', function() {
 		if (!$auxEl.hasClass('escuro')) {
 			$auxEl.show();
@@ -18,6 +20,7 @@ $(function() {
 		}
 	});
 
+	// evento para o desvanescimento da div auxiliar ao clicá-la:
 	$auxEl.on('click', function() {
 		if ($('#menu-criacao-conta').css('display') === 'none'
 				&& $('#fim-de-jogo').css('display') === 'none'
@@ -28,14 +31,22 @@ $(function() {
 		}
 	});
 
+	// ícone para ativar o menu lateral:
 	$('header').on('click', '#icone-menu-lateral', function() {
 		$('body').toggleClass('menu-lateral-ativo');
 		playSfx('menu-ativo.wav');
 	});
 
+	// seleção do modelo de personagem:
+	let $modelosEl = $('#menu-criacao-conta').find('section');
+
+	$modelosEl.on('click', function() {
+		$modelosEl.removeClass('selecionado');
+		$(this).addClass('selecionado');
+	});
+
 	// áudios do jogo:
 	$headerEl.on('click', '#icone-audio', function() {
-
 		let $audiosEl = $('audio');
 
 		if ($audiosEl.prop('muted')) {
@@ -45,7 +56,6 @@ $(function() {
 			$audiosEl.prop('muted', true);
 			$(this).attr('src', 'imgs/sem-audio.svg');
 		}
-
 	});
 
 });
