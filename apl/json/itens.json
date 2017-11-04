@@ -1,92 +1,92 @@
 {
-  "bola":{
-    "nome":"Bola",
-    "preco":10,
-    "tipo":"Criança"
+  "bola": {
+    "nome": "Bola",
+    "preco" :10,
+    "tipo": "Criança"
   },
-  "bicicleta":{
-    "nome":"Bicicleta de Brinquedo",
-    "preco":50,
-    "tipo":"Criança"
+  "peteca": {
+    "nome": "Peteca",
+    "preco": 10,
+    "tipo": "Criança"
   },
-  "carrinho":{
-    "nome":"Carrinho de Brinquedo",
-    "preco":40,
-    "tipo":"Criança"
+  "cubos": {
+    "nome": "Cubos de Brinquedo",
+    "preco": 15,
+    "tipo": "Criança"
   },
-  "boneco":{
-    "nome":"Boneco",
-    "preco":20,
-    "tipo":"Criança"
+  "poster-bicicleta": {
+    "nome": "Poster com Bicicleta",
+    "preco": 20,
+    "tipo": "Criança"
   },
-  "chocalho":{
-    "nome":"Chocalho",
-    "preco":30,
-    "tipo":"Criança"
+  "boneco": {
+    "nome": "Boneco",
+    "preco": 20,
+    "tipo": "Criança"
   },
-  "peteca":{
-    "nome":"Peteca",
-    "preco":10,
-    "tipo":"Criança"
+  "chocalho": {
+    "nome": "Chocalho",
+    "preco": 30,
+    "tipo": "Criança"
   },
-  "cubos":{
-    "nome":"Cubos de Brinquedo",
-    "preco":15,
-    "tipo":"Criança"
+  "carrinho": {
+    "nome": "Carrinho de Brinquedo",
+    "preco": 40,
+    "tipo": "Criança"
   },
-  "cachorro":{
-    "nome":"Cachorro",
-    "preco":200,
-    "tipo":"Adolescente"
+  "cachorro": {
+    "nome": "Cachorro",
+    "preco": 150,
+    "tipo": "Adolescente"
   },
-  "gato":{
-    "nome":"Gato",
-    "preco":200,
-    "tipo":"Adolescente"
+  "gato": {
+    "nome": "Gato",
+    "preco": 150,
+    "tipo": "Adolescente"
   },
-  "mp3":{
-    "nome":"MP3 Player",
-    "preco":150,
-    "tipo":"Adolescente"
+  "mp3": {
+    "nome": "MP3 Player",
+    "preco": 150,
+    "tipo": "Adolescente"
   },
-  "celular":{
-    "nome":"Celular",
-    "preco":700,
-    "tipo":"Adolescente"
+  "celular": {
+    "nome": "Celular",
+    "preco": 500,
+    "tipo": "Adolescente"
   },
-  "videogame":{
-    "nome":"Video-game",
-    "preco":1000,
-    "tipo":"Adolescente"
+  "videogame": {
+    "nome": "Video-game",
+    "preco": 700,
+    "tipo": "Adolescente"
   },
-  "computador":{
-    "nome":"Computador",
-    "preco":1500,
-    "tipo":"Adolescente"
+  "computador": {
+    "nome": "Computador",
+    "preco": 1500,
+    "tipo": "Adolescente"
   },
-  "sofa":{
-    "nome":"Sofá",
-    "preco":500,
-    "tipo":"Adulto"
+  "sofa": {
+    "nome": "Sofá",
+    "preco": 500,
+    "tipo": "Adulto"
   },
-  "tv":{
-    "nome":"Televisão",
-    "preco":1500,
-    "tipo":"Adulto"
+  "tv": {
+    "nome": "Televisão",
+    "preco": 1500,
+    "tipo": "Adulto"
   },
-  "carro":{
-    "nome":"Carro",
-    "preco":20000,
-    "tipo":"Adulto"
+  "eletrodomesticos": {
+    "nome": "Eletrodomésticos",
+    "preco": 5000,
+    "tipo": "Adulto"
   },
-  "casa":{
-    "nome":"Casa",
-    "preco":150000,
-    "tipo":"Adulto"
+  "carro": {
+    "nome": "Carro",
+    "preco": 15000,
+    "tipo": "Adulto"
   },
-  "eletrodomesticos":{
-    "nome":"Eletrodomésticos",
-    "preco":10000,
-    "tipo":"Adulto"
+  "casa": {
+    "nome": "Casa",
+    "preco": 100000,
+    "tipo": "Adulto"
   }
 }

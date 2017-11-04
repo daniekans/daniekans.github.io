@@ -30,7 +30,6 @@ div#menu-lateral {
 	bottom: 0;
 	background-image: linear-gradient(to right, #13142c, 90%, black);
 	color: white;
-	font-size: 1.5em;
 	transform-origin: right;
 	transform: rotateY(90deg);
 	padding: 2%;
@@ -181,21 +180,26 @@ div#menu-criacao-conta {
 	display: flex;
   align-items: baseline;
   justify-content: space-around;
-	margin: 2% 0;
+	margin: 4% 0;
 	padding: 1%;
 }
 
 #escolha-genero img {
-	min-width: 100%;
+	min-height: 20vh;
 	image-rendering: pixelated;
 }
 
-#escolha-genero section {
-	padding: 2%;
+#escolha-genero > section {
+	padding: 2% 4%;
 	cursor: pointer;
 	position: relative;
 	transition: bottom 100ms ease-in;
 	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 1em;
+}
+
+#escolha-genero > section p {
+	text-align: center;
 }
 
 .selecionado {
@@ -277,16 +281,19 @@ header span {
 	font-size: 3vw;
 }
 
-header img {
-	width: 3%;
+header img, .upgrade {
 	cursor: pointer;
 	display: inline-block;
 	vertical-align: text-bottom;
-	margin: 0 1%;
 	transition: all 200ms linear;
-	padding: 1%;
 	border-radius: 5px;
 	background-color: rgba(0, 0, 0, 0.1);
+}
+
+header img {
+	margin: 0 1%;
+	width: 3%;
+	padding: 1%;
 }
 
 header img:hover {
@@ -347,6 +354,7 @@ main h2 {
 	max-height: 100%;
 	position: relative;
 	min-width: 100%;
+	margin: 0 auto;
 }
 
 #cenario-container #img-cenario {
@@ -384,6 +392,12 @@ main h2 {
 	transition: width 50ms linear;
 }
 
+#jogador-xp, #jogador-limite-xp {
+	width: fit-content;
+	margin: 3%;
+	text-align: center;
+}
+
 .span-xp {
 	position: absolute;
 	color: white;
@@ -400,6 +414,7 @@ main h2 {
 	box-shadow: inset 0px 3px 5px black;
 	color: white;
 	padding: 1%;
+	overflow-x: auto;
 }
 
 #upgrades-jogo > h2, #xp-jogo > h2 {
@@ -411,8 +426,42 @@ main h2 {
 	text-shadow: 2px 2px 3px black;
 }
 
-#upgrades-jogo p {
-	margin: 0; /* temporário */
+#upgrades-container {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	margin: 0 5%;
+}
+
+.upgrade {
+	max-width: 6vh;
+	display: inline-block;
+	margin: 0 10%;
+	padding: 5%;
+}
+
+#descricao-upgrade {
+	display: none;
+	position: absolute;
+	border: 2px solid silver;
+	box-shadow: inset 0px 0px 20px silver;
+	background-color: white;
+	padding: 1%;
+	z-index: 2;
+	max-width: 20%;
+}
+
+#descricao-upgrade > h2 {
+	font-size: 2vw;
+}
+
+#descricao-upgrade > p, .preco-upgrade {
+	font-size: 1.5vw;
+}
+
+.preco-upgrade {
+	float: right;
+	color: rgb(18, 159, 36);
 }
 
 #itens-jogo {
@@ -422,6 +471,7 @@ main h2 {
 	padding: 1%;
 	position: relative;
 	box-shadow: inset 0px 3px 5px silver;
+	overflow: hidden;
 }
 
 #itens-jogo section {
@@ -531,6 +581,8 @@ footer {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 footer #apl-logo {
@@ -541,7 +593,7 @@ footer > h2 {
 	margin: 0 2%;
 }
 
-/*--- barra de rolagem e keyframes ---*/
+/*>>> Barra de rolagem, Keyframes e Media Queries <<<*/
 
 ::-webkit-scrollbar {
 	background: #f2f2f2;
@@ -565,4 +617,78 @@ footer > h2 {
 		transform: scale(1.05);
 		box-shadow: -5px 2px 25px rgb(145, 101, 16);
 	}
+}
+
+@media screen and (orientation: portrait) {
+
+	/* #menu-criacao-conta (mudanças no layout) */
+
+	#escolha-genero {
+		display: initial;
+	}
+
+	#escolha-genero section {
+		display: inline-block;
+		margin: 4%;
+	}
+
+	#escolha-genero section:nth-child(even) {
+		float: right;
+	}
+
+	#escolha-genero section:nth-child(odd) {
+		float: left;
+	}
+
+	#botao-iniciar-jogo, #escolha-genero section:nth-child(odd) {
+		clear: both;
+	}
+
+	/* #upgrades-jogo */
+
+	#upgrades-jogo::-webkit-scrollbar {
+		height: 0; /* faz com que a barra de rolagem não seja visível */
+	}
+
+}
+
+@media only screen and (max-aspect-ratio: 5/8) {
+
+	/* #menu-lateral */
+
+	div#menu-lateral {
+		width: 80vw;
+		left: -80vw;
+		text-align: center;
+	}
+
+	#menu-lateral > h2 {
+		font-size: 10vw;
+		margin-top: 30vh;
+	}
+
+	#menu-lateral #lista-opcoes li {
+		font-size: 7vw;
+		padding: 5% 0;
+
+	}
+
+	body.menu-lateral-ativo #conteudo {
+		left: 80vw;
+	}
+
+	#escolha-genero {
+		display: initial;
+	}
+
+	#escolha-genero section {
+		display: block;
+		margin: 4% auto;
+		text-align: center;
+	}
+
+	#menu-criacao-conta #escolha-genero section {
+		float: none;
+	}
+
 }

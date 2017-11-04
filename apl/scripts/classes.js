@@ -38,7 +38,7 @@ class Item {
     this.tipo = tipo;
   }
 
-  static atualizaItens(todosOsItens, jogador) {
+  static atualizaItens(jogador) {
 
     // Loja e pertences:
     let $lojaEl = $('#loja');
@@ -53,7 +53,8 @@ class Item {
       let $itemEl = $('<div></div>');
       let $itemImgEl = $('<img>');
       let $itemNomeEl = $('<h3></h3>').text(item.nome);
-      let $itemPrecoEl = $('<span></span>').text('Preço: R$' + item.preco);
+      let $itemPrecoEl = $('<span></span>')
+        .text(`Preço: R$${item.preco}`);
       let $btComprarEl = $('<button></button>').text('COMPRAR');
 
       $itemImgEl.attr('src', ('imgs/' + nomeProp + '.png')); // Ajustar depois
@@ -73,12 +74,12 @@ class Item {
         $btComprarEl.on('click', function() {
           if (jogador.dinheiro >= item.preco) {
             playSfx('comprado.wav');
-            jogador.itens.push(item);
+            jogador.adicionaItem(item);
             jogador.dinheiro -= item.preco;
             $('#dinheiro-span').text(jogador.dinheiro);
             let $imgItemCenarioEl = $(`img[src*="${nomeProp}"]`);
             $imgItemCenarioEl.animate({ 'opacity': '1' }, 200); // fade() não está dando certo
-            Item.atualizaItens(todosOsItens, jogador);
+            Item.atualizaItens(jogador);
           } else {
             playSfx('sem-permissao.wav');
           }
@@ -91,7 +92,7 @@ class Item {
 
     [$pertencesEl, $lojaEl].forEach(function($containerEl) {
       if (!$containerEl.children().length)
-        $containerEl.append($('<h3>Sem itens.<h3>').addClass('sem-itens'));
+        $containerEl.append($('<h3>Sem itens.</h3>').addClass('sem-itens'));
     });
 
   }
@@ -107,7 +108,7 @@ class Jogador {
     this.idade = 1;
     this.genero = '';
     this.xp = 0;
-    this.limiteXPInicial = 10;
+    this.limiteXPInicial = 15;
     this.limiteXP = this.limiteXPInicial;
     this.incrementoXP = 1;
     this.dinheiro = 0;
@@ -116,9 +117,10 @@ class Jogador {
     this.inteligencia = 20;
     this.amor = 10;
     this.itens = [];
+    this.upgrades = [];
     this.faseVida = FasesDaVida.CRIANCA;
     this.tipoItens = this.faseVida;
-    this.situacao = Situacao.ESTUDANTE;
+    this.situacao = Situacao.NADA;
     this.imagemSrc = '';
 
     // caso seja passado um objeto para o construtor:
@@ -137,18 +139,22 @@ class Jogador {
       case 12:
         this.faseVida = FasesDaVida.ADOLESCENTE;
         this.tipoItens = this.faseVida;
-        this.incrementoDinheiro = 5;
-        Item.atualizaItens(todosOsItens, this);
+        this.incrementoDinheiro = 10;
+        Item.atualizaItens(this);
+        alert('Você se tornou adolescente!');
         break;
       case 18:
         this.faseVida = FasesDaVida.ADULTO;
         this.tipoItens = this.faseVida;
-        this.incrementoDinheiro = 15;
-        this.incrementoXP = 3;
-        Item.atualizaItens(todosOsItens, this)
+        this.situacao = Situacao.DESEMPREGADO;
+        this.incrementoDinheiro = 25;
+        this.incrementoXP = 2;
+        Item.atualizaItens(this)
+        alert('Você se tornou adulto!');
         break;
       case 65:
         this.faseVida = FasesDaVida.IDOSO;
+        alert('Você se tornou idoso!');
         break;
       case 100:
         this.faseVida = FasesDaVida.MORTO;
@@ -203,10 +209,8 @@ class Jogador {
 
   adicionaItem(item) {
 
-    if (item instanceof Item) {
+    if (item instanceof Item)
       this.itens.push(item);
-      // this.itens.sort();
-    }
 
   }
 
@@ -218,6 +222,21 @@ class Jogador {
         if (temp.nome === item.nome && temp.preco === item.preco)
             this.itens.splice(i, 1);
       }
+  }
+
+  adicionaUpgrade(upgrade) {
+
+    if (upgrade instanceof Upgrade)
+      this.upgrades.push(upgrade);
+
+  }
+
+  atualizaSpansComAtributos() {
+
+    $('#nome-span').text(this.nome);
+    $('#idade-span').text(this.idade);
+    $('#dinheiro-span').text(`R$${this.dinheiro}`);
+
   }
 
 }
@@ -238,9 +257,9 @@ class EfeitoJogador {
     let self = this;
     function modificaProp(propriedade) {
         if (String(self.efeito).startsWith('x'))
-          jogador[propriedade] *= self.efeito;
+          jogador[propriedade] *= parseInt(self.efeito.replace('x', ''));
         else
-          jogador[propriedade] += self.efeito;
+          jogador[propriedade] += parseInt(self.efeito);
     }
 
     switch (this.tipoEfeito) {
@@ -267,7 +286,7 @@ class EfeitoJogador {
         let $auxEl = $('#aux');
         $auxEl.show();
         $auxEl.addClass('escuro');
-        Item.atualizaItens(todosOsItens, jogador);
+        Item.atualizaItens(jogador);
         break;
     }
 
@@ -344,13 +363,80 @@ class Ficha extends EfeitoJogador {
 // Classe Upgrade, a qual será implementada caso haja tempo suficiente:
 class Upgrade extends EfeitoJogador {
 
-  constructor(imagemId = '', mensagem, tipoEfeito, efeito) {
+  constructor(imagemId = '', mensagem, tipoEfeito, efeito, preco = 0) {
     super(mensagem, tipoEfeito, efeito);
 
-    this.imagem = $('#' + imagemId + '');
+    this.imagemId = imagemId;
+    this.preco = preco;
   }
 
-  static atualizaUpgrades() {
+  aplicaEfeito(jogador) {
+
+    super.aplicaEfeito(jogador);
+
+    switch (this.imagemId) {
+      case 'escola':
+        jogador.incrementoDinheiro += 1;
+        jogador.situacao = Situacao.ESTUDANTE;
+        break;
+      case 'faculdade':
+        jogador.incrementoDinheiro += 10;
+        jogador.situacao = Situacao.ESTUDANTE;
+        break;
+      case 'emprego':
+        jogador.incrementoDinheiro += 200;
+        jogador.situacao = Situacao.EMPREGADO;
+        break;
+    }
+
+  }
+
+  static atualizaUpgrades(jogador) {
+
+    let $upgradesEl = $('#upgrades-container');
+    $upgradesEl.empty();
+
+    Object.entries(todosOsUpgrades).forEach(function(parUpgrade) {
+
+      let nomeUpgrade = parUpgrade[0];
+      let upgrade = parUpgrade[1];
+      let $imgUpgradeEl = $('<img>');
+
+      $imgUpgradeEl.addClass('upgrade');
+      $imgUpgradeEl.attr('src', `imgs/${nomeUpgrade}.png`);
+      // handlers para os upgrades:
+      $imgUpgradeEl.on('click', function() {
+        if (jogador.dinheiro >= upgrade.preco) {
+          upgrade.aplicaEfeito(jogador);
+          jogador.dinheiro -= upgrade.preco;
+          jogador.adicionaUpgrade(upgrade);
+          jogador.atualizaSpansComAtributos();
+          $imgUpgradeEl.fadeOut(400);
+          setTimeout(() => $imgUpgradeEl.remove(), 500);
+        }
+      });
+      let $descricaoEl = $('#descricao-upgrade');
+      $imgUpgradeEl.on('mousemove', function(evt) {
+        $descricaoEl.css({
+          left: evt.pageX + 20,
+          top: evt.pageY - parseInt($descricaoEl.css('height')) * 1.2
+        });
+      });
+      $imgUpgradeEl.on('mouseenter', function() {
+        $descricaoEl.find('p').text(upgrade.mensagem);
+        $descricaoEl.find('h2').text(nomeUpgrade
+          .replace(nomeUpgrade[0], nomeUpgrade[0] // torna maiúscula a primeira letra
+            .toUpperCase()));
+        $descricaoEl.find('.preco-upgrade').text(`R$${upgrade.preco}`);
+        $descricaoEl.show();
+      });
+      $imgUpgradeEl.on('mouseleave', () => $descricaoEl.hide());
+
+      // se o jogador já tiver comprado o upgrade, este não é incluído na section:
+      if (!jogador.upgrades.find((jogUp) => jogUp.imagemId === upgrade.imagemId ))
+        $upgradesEl.append($imgUpgradeEl);
+
+    });
 
   }
 
@@ -382,26 +468,55 @@ $.getJSON('json/fichas.json', function(dados) {
   for (let ficha of fichas) {
     if (ficha.fase instanceof Array)
       for (let i = 0; i < ficha.fase.length; i++)
-        todasAsFichas.push(new Ficha(ficha.mensagem, ficha.tipoAcontecimento,
-          ficha.tipoEfeito, ficha.efeito[i], ficha.probabilidade[i], ficha.fase[i]));
+        todasAsFichas.push(new Ficha(
+          ficha.mensagem,
+          ficha.tipoAcontecimento,
+          ficha.tipoEfeito,
+          ficha.efeito[i],
+          ficha.probabilidade[i],
+          ficha.fase[i]
+        ));
     else
-      todasAsFichas.push(new Ficha(ficha.mensagem, ficha.tipoAcontecimento,
-        ficha.tipoEfeito, ficha.efeito, ficha.probabilidade, ficha.fase));
+      todasAsFichas.push(new Ficha(
+        ficha.mensagem,
+        ficha.tipoAcontecimento,
+        ficha.tipoEfeito,
+        ficha.efeito,
+        ficha.probabilidade,
+        ficha.fase
+      ));
+
   }
 
   for (let ficha of todasAsFichas) {
     switch (ficha.fase) {
       case FasesDaVida.CRIANCA:
-      fichasCrianca.push(ficha);
+        fichasCrianca.push(ficha);
       break;
       case FasesDaVida.ADOLESCENTE:
-      fichasAdolescente.push(ficha);
+        fichasAdolescente.push(ficha);
       break;
       case FasesDaVida.ADULTO:
       case FasesDaVida.IDOSO:
-      fichasAdulto.push(ficha);
+        fichasAdulto.push(ficha);
       break;
     }
   }
+
+});
+
+// criação dos upgrades:
+var todosOsUpgrades = {};
+$.getJSON('json/upgrades.json', function(dados) {
+
+  Object.values(todosOsUpgrades).sort((up1, up2) => (up1.preco - up2.preco));
+  for (let nomeUpgrade in dados)
+    todosOsUpgrades[nomeUpgrade] = new Upgrade(
+      nomeUpgrade,
+      dados[nomeUpgrade].mensagem,
+      dados[nomeUpgrade].tipoEfeito,
+      dados[nomeUpgrade].efeito,
+      dados[nomeUpgrade].preco
+    );
 
 });

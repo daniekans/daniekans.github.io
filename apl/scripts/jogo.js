@@ -36,8 +36,8 @@ $(function() {
     $nomeSpanEl.text(jogador.nome);
     $idadeSpanEl.text(jogador.idade);
     $dinheiroSpanEl.text(`R$${jogador.dinheiro}`);
-    $('title').text(jogador.nome + '\'' + (jogador.nome.endsWith('s')) ? '' : 's Life');
-
+    $('title').text(jogador.nome + '\'' + (jogador.nome.endsWith('s') ? '' : 's Life'));
+    
     // carregamento das imagens dos pertences
     $('#jogador-imagem').attr('src', jogador.imagemSrc);
     $('#img-cenario').attr('src', `imgs/quarto-${jogador.genero}.png`);
@@ -54,9 +54,12 @@ $(function() {
     function atzBarraXP() {
       let larguraAtual = (jogador.xp + jogador.limiteXPInicial - jogador.limiteXP)
         * 100 / jogador.limiteXPInicial;
-        $('#barra-xp').css({
-          width: `${larguraAtual}%`
-        });
+
+      $('#barra-xp').css({
+        width: `${larguraAtual}%`
+      });
+      $('#jogador-xp').text(`Seu XP: ${jogador.xp}`);
+      $('#jogador-limite-xp').text(`Próx. Idade: ${jogador.limiteXP}`);
     }
 
     $('#conteudo').on('click', '#jogador-imagem', function (evt) {
@@ -87,15 +90,18 @@ $(function() {
     });
 
     atzBarraXP();
-    Item.atualizaItens(todosOsItens, jogador);
+    Item.atualizaItens(jogador);
+    Upgrade.atualizaUpgrades(jogador);
 
   }
+
   // Carregamento de jogador existente, caso exista:
   let tempJogador = new Jogador(JSON.parse(localStorage.getItem('Jogador')));
   if (tempJogador && tempJogador.nome !== null) {
     $('#menu-criacao-conta').hide();
+    // para que dê tempo de carregar os arquivos necessários, é preciso esperar um tempo:
+    setTimeout(() => iniciarJogo(), 50);
     jogador = tempJogador;
-    iniciarJogo();
     // ...
   } else {
 

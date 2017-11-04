@@ -1,0 +1,20 @@
+{
+  "escola": {
+    "mensagem": "É assim que seus estudos para progredir na vida começam!",
+    "tipoEfeito": "@",
+    "efeito": "x3",
+    "preco": 20
+  },
+  "faculdade": {
+    "mensagem": "Começar a faculdade pode ser algo muito bom para a sua vida!",
+    "tipoEfeito": "@",
+    "efeito": "x5",
+    "preco": 400
+  },
+  "emprego": {
+    "mensagem": "Arrume um emprego e comece a ganhar mais dinheiro!",
+    "tipoEfeito": "$",
+    "efeito": "x2",
+    "preco": 2000
+  }
+}
