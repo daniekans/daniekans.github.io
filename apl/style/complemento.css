@@ -1,0 +1,362 @@
+/* A Person's Life
+ * Trabalho de Web – INF-1A – CEFET-MG
+ */
+
+ /*>>> Elementos à parte do conteúdo principal <<<*/
+
+ /*--- menu lateral ---*/
+
+ div#menu-lateral {
+ 	width: 20%;
+ 	height: 100%;
+ 	position: fixed;
+ 	left: -20%;
+ 	top: 0;
+ 	bottom: 0;
+ 	background-image: linear-gradient(to right, #13142c, 90%, black);
+ 	color: white;
+ 	transform-origin: right;
+ 	transform: rotateY(90deg);
+ 	padding: 2%;
+ 	box-sizing: border-box;
+ 	z-index: 1;
+ }
+
+ #menu-lateral > h2 {
+ 	font-size: 3vw;
+ }
+
+ #menu-lateral #lista-opcoes {
+ 	padding: 0;
+ }
+
+ #menu-lateral #lista-opcoes li {
+ 	list-style: none;
+ 	font-size: 2vw;
+ 	padding: 5% 0;
+ 	transition: all 100ms linear;
+ 	position: relative;
+ 	top: 0;
+ }
+
+ #menu-lateral #lista-opcoes li:hover {
+ 	top: -10px;
+ 	cursor: pointer;
+ }
+
+ #menu-lateral button {
+ 	color: white;
+ }
+
+ #menu-lateral, #conteudo, .menu-lateral-ativo #conteudo {
+ 	transition: all 200ms ease-out;
+ }
+
+ body.menu-lateral-ativo #menu-lateral {
+ 	left: 0;
+ 	opacity: 1;
+ 	transform: rotateY(0);
+ }
+
+ body.menu-lateral-ativo #conteudo {
+ 	left: 20%;
+ }
+
+ /*--- janela de informações ---*/
+
+ div#janela-info {
+ 	background-color: floralwhite;
+ 	max-width: 50%;
+ 	display: none;
+ 	opacity: 0;
+ 	padding: 5%;
+ 	max-height: 90%;
+ 	overflow: auto;
+ }
+
+ div#janela-info, .ficha {
+ 	margin: 2% 25%;
+ 	box-sizing: border-box;
+ 	position: absolute;
+ 	top: 0;
+ 	border: 5px solid gray;
+ 	box-shadow: inset 3px 3px 50px silver;
+ 	z-index: 3;
+ }
+
+ #janela-info > h2 {
+ 	font-family: 'Indie Flower', cursive;
+ }
+
+ #janela-info > h2, .ficha > h2 {
+ 	padding: 0;
+ 	margin: 0;
+ 	text-shadow: 2px 2px 2px lightgray;
+ 	text-align: center;
+ 	font-size: 3vw;
+ }
+
+ #janela-info li h4 {
+   margin: 2% 0;
+ }
+
+ .bloco-criador {
+ 	background-color: #ee8e32;
+ 	text-align: center;
+ 	border-radius: 3%;
+ 	padding: 2%;
+ 	margin: 2% auto;
+ 	box-shadow: 2px 2px 2px silver;
+ 	border: 5px solid #c37225;
+ }
+
+ .bloco-criador img {
+ 	max-width: 30%;
+ 	max-height: 10%;
+ 	box-shadow: -5px 2px 5px rgb(145, 101, 16);
+ 	float: right;
+ 	transform-origin: left;
+ 	animation: flutuando 1500ms linear infinite alternate;
+  margin-left: 1%;
+ }
+
+ .bloco-criador h3 {
+ 	color: white;
+ 	text-shadow: 2px 3px 4px rgb(195, 117, 21);
+ }
+
+ /*--- div auxiliar que cobre a tela ---*/
+
+ div#aux {
+ 	min-width: 100%;
+ 	min-height: 100%;
+ 	position: fixed;
+ 	display: none;
+ 	transition: all 200ms linear;
+ 	z-index: 2;
+ }
+
+ #janela-info.ocupa-espaco, #menu-lateral.ocupa-espaco, #aux.ocupa-espaco {
+ 	opacity: 1;
+ 	display: block;
+ }
+
+ .escuro {
+ 	background-color: rgba(0, 0, 0, 0.3);
+ 	transition: all 300ms linear;
+ }
+
+ .clear {
+ 	clear: both;
+ }
+
+ /*--- #menu-criacao-conta e #fim-de-jogo ---*/
+
+ div#menu-criacao-conta {
+ 	background-color: rgb(149, 233, 141);
+ 	border: 5px solid rgb(93, 173, 86);
+ }
+
+ #menu-criacao-conta h2 {
+ 	margin-top: 0;
+ 	text-align: center;
+ }
+
+ #menu-criacao-conta label, #menu-criacao-conta > p {
+ 	text-decoration: underline;
+ }
+
+ #escolha-genero {
+ 	display: flex;
+   align-items: baseline;
+   justify-content: space-around;
+ 	margin: 4% 0;
+ 	padding: 1%;
+ }
+
+ #escolha-genero img {
+ 	min-height: 20vh;
+ 	image-rendering: pixelated;
+ }
+
+ #escolha-genero > section {
+ 	padding: 2% 4%;
+ 	cursor: pointer;
+ 	position: relative;
+ 	transition: bottom 100ms ease-in;
+ 	background-color: rgba(0, 0, 0, 0.2);
+ 	border-radius: 1em;
+ }
+
+ #escolha-genero > section p {
+ 	text-align: center;
+ }
+
+ .selecionado {
+ 	bottom: 20px;
+ 	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+ }
+
+ #botao-iniciar-jogo {
+ 	color: green;
+ 	box-shadow: 0px 2px 5px green;
+ }
+
+ #botao-recomecar {
+ 	color: red;
+ 	box-shadow: 0px 2px 5px red;
+ }
+
+ #botao-iniciar-jogo, #botao-recomecar {
+ 	background-color: white;
+ 	padding: 2%;
+ 	font-family: inherit;
+ 	font-size: inherit;
+ 	border: none;
+ 	border-radius: 5px;
+ 	display: block;
+ 	margin: 0 auto;
+ 	cursor: pointer;
+ 	transition: transform 100ms linear;
+ }
+
+ #botao-iniciar-jogo:hover, #botao-recomecar:hover {
+ 	transform: scale(1.2);
+ }
+
+ div#fim-de-jogo {
+ 	background-color: rgb(244, 83, 83);
+ 	border: 5px solid rgb(138, 21, 10);
+ 	display: none;
+ }
+
+ #menu-criacao-conta, #fim-de-jogo {
+ 	box-sizing: border-box;
+ 	position: absolute;
+ 	top: 0;
+ 	background-color: white;
+ 	width: 80%;
+ 	margin: 0 10%;
+ 	padding: 5%;
+ 	border-bottom-left-radius: 1em;
+ 	border-bottom-right-radius: 1em;
+ 	font-size: 120%;
+ 	z-index: 3;
+ }
+
+ /*>>> Barra de rolagem, Keyframes e Media Queries <<<*/
+
+ ::-webkit-scrollbar {
+ 	background: #f2f2f2;
+   width: 0.5vw;
+ }
+
+ ::-webkit-scrollbar-thumb {
+ 	background-color: gray;
+ }
+
+ ::selection {
+ 	background-color: rgba(0, 0, 0, 0.2); /* como não há fundos pretos... */
+ }
+
+ @keyframes flutuando {
+ 	from {
+ 		transform: scale(1);
+ 		box-shadow: -5px 2px 5px rgb(145, 101, 16);
+ 	}
+ 	to {
+ 		transform: scale(1.05);
+ 		box-shadow: -5px 2px 25px rgb(145, 101, 16);
+ 	}
+ }
+
+ @media screen and (orientation: portrait) {
+
+ 	/* #menu-criacao-conta (mudanças no layout) */
+
+ 	#escolha-genero {
+ 		display: initial;
+ 	}
+
+ 	#escolha-genero section {
+ 		display: inline-block;
+ 		margin: 4%;
+ 	}
+
+ 	#escolha-genero section:nth-child(even) {
+ 		float: right;
+ 	}
+
+ 	#escolha-genero section:nth-child(odd) {
+ 		float: left;
+ 	}
+
+ 	#botao-iniciar-jogo, #escolha-genero section:nth-child(odd) {
+ 		clear: both;
+ 	}
+
+ 	/* #upgrades-jogo */
+
+ 	#upgrades-jogo::-webkit-scrollbar {
+ 		height: 0; /* faz com que a barra de rolagem não seja visível */
+ 	}
+
+ }
+
+ @media only screen and (max-aspect-ratio: 5/8) {
+
+ 	/* #menu-lateral */
+
+ 	div#menu-lateral {
+ 		width: 80vw;
+ 		left: -80vw;
+ 		text-align: center;
+ 	}
+
+ 	#menu-lateral > h2 {
+ 		font-size: 10vw;
+ 		margin-top: 30vh;
+ 	}
+
+ 	#menu-lateral #lista-opcoes li {
+ 		font-size: 7vw;
+ 		padding: 5% 0;
+
+ 	}
+
+ 	body.menu-lateral-ativo #conteudo {
+ 		left: 80vw;
+ 	}
+
+ 	#escolha-genero {
+ 		display: initial;
+ 	}
+
+ 	#escolha-genero section {
+ 		display: block;
+ 		margin: 4% auto;
+ 		text-align: center;
+ 	}
+
+ 	#menu-criacao-conta #escolha-genero section {
+ 		float: none;
+ 	}
+
+ }
+
+ @media only screen and (min-aspect-ratio: 16/9) {
+
+   /* Ajuste das imagens ao tamanho da tela */
+
+   #tela-jogo #cenario-container {
+     height: 100%;
+     min-width: auto;
+   }
+
+   #tela-jogo #img-cenario {
+     width: auto;
+     max-width: 100%;
+     height: 100%;
+   }
+
+ }

@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style/estilo-geral.css">
-    <link rel="stylesheet" href="style/itens-e-jogador.css">
+    <link rel="stylesheet" href="style/complemento.css">
     <link rel="shortcut icon" href="imgs/life.ico">
     <title>A Person's Life</title>
   </head>
@@ -43,7 +43,7 @@
         </section>
         <section id="tela-jogo">
           <div id= "cenario-container">
-            <img id="img-cenario" src="imgs/quarto-fundo-branco.png" alt="Cenário para o personagem ">
+            <img id="img-cenario" src="imgs/quarto-masculino.png" alt="Cenário para o personagem ">
             <!-- Restante das imagens, com posicionamento absoluto: -->
             <img id="jogador-imagem" src="" alt="">
           </div>
@@ -105,7 +105,8 @@
 
       <div id="fim-de-jogo">
         <h2>Fim de Jogo!</h2>
-        <p>Infelizmente, sua vida chegou ao fim. Esta foi a sua situação final:</p>
+        <p>Infelizmente, sua vida chegou ao fim.</p>
+        <p id="total-pontos"></p>
         <section id="atributos-finais">
 
         </section>
@@ -118,6 +119,7 @@
       <h2>Menu</h2>
       <ul id="lista-opcoes">
         <li id="li-instrucoes">Instruções</li>
+        <li id="li-screenshot">Screenshot do personagem</li>
         <li id="li-apagar-dados">Apagar dados da conta</li>
       </ul>
     </div> <!-- fim do menu lateral -->
@@ -145,36 +147,52 @@
           <img src="imgs/gabriel.jpg">
           <h3>Gabriel Cruz</h3>
           <p>
-            Artista que criou as imagens utilizadas pelo jogo e produtor da história.
+            Artista que criou as imagens utilizadas pelo jogo, selecionou músicas e é o produtor da história.
           </p>
           <div class="clear"></div>
         </article>
         <article class="bloco-criador">
           <img src="imgs/batista.jpg">
           <h3>Guilherme Batista</h3>
-          <p>Estilista fundamental da página</p>
+          <p>Estilista fundamental da página (e permanece de mal com o CSS...)</p>
           <div class="clear"></div>
         </article>
       </div>
       <h3>Mais créditos:</h3>
       <ul>
-        <li>Efeitos sonoros: Freesound.org</li>
-        <li>Música de fundo: "Home" – Undertale, por Toby Fox</li>
-        <li>Arte da logomarca: Logomaker.com</li>
+        <li>
+          <h4>Efeitos sonoros:</h4>
+            Freesound.org
+        </li>
+        <li>
+          <h4>Músicas de fundo:</h4>
+          <div>Criança - 7 years, Lukas Graham;</div>
+          <div>Adolescente - Sweet Child O' Mine (cover), Jess Greenberg;</div>
+          <div>Adulto - Castle On the Hill, Boyce Avenue;</div>
+          <div>Idoso - In my Life, Ed Sheeran.</div>
+        </li>
+        <li>
+          <h4>Arte da logomarca:</h4>
+            Logomaker.com
+        </li>
       </ul>
     </div>
 
-    <audio id="musica-de-fundo" src="audio/home.mp3" autoplay loop>
+    <!-- Áudio: -->
+    <audio id="musica-de-fundo" src="audio/castle-on-the-hill.mp3" autoplay loop>
+      <!-- Por algum motivo, p atributo 'volume' não pôde ser alterado aqui -->
       O seu navegador não suporta este tipo de áudio
     </audio>
     <audio id="efeito-sonoro">
       O seu navegador não suporta este tipo de áudio
     </audio>
 
+    <!-- Scripts usados pela página: -->
     <script src="scripts/jquery-3.2.1.min.js"></script>
+    <script src="scripts/html2canvas.js"></script>
+    <script src="scripts/interface.js"></script>
     <script src="scripts/classes.js"></script>
     <script src="scripts/jogo.js"></script>
-    <script src="scripts/interface.js"></script>
 
   </body>
 </html>

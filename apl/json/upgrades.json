@@ -1,20 +1,44 @@
 {
   "escola": {
-    "mensagem": "É assim que seus estudos para progredir na vida começam!",
+    "mensagem": "É assim que seus estudos para progredir na vida começam! A não ser que queira fazer isso com 90 anos de idade...",
     "tipoEfeito": "@",
     "efeito": "x3",
     "preco": 20
   },
+  "amizades": {
+    "mensagem": "Fazer novas amizades é imprescindível para uma vida feliz!",
+    "tipoEfeito": ":)",
+    "efeito": "x3",
+    "preco": 80
+  },
+  "ensino-medio": {
+    "mensagem": "Já é hora de voltar o olhar para o futuro e fazer planos para a vida...",
+    "tipoEfeito": "@",
+    "efeito": "x4",
+    "preco": 200
+  },
   "faculdade": {
-    "mensagem": "Começar a faculdade pode ser algo muito bom para a sua vida!",
+    "mensagem": "Começar a faculdade é o próximo passo para ter sucesso na vida!",
     "tipoEfeito": "@",
     "efeito": "x5",
-    "preco": 400
+    "preco": 1000
   },
   "emprego": {
-    "mensagem": "Arrume um emprego e comece a ganhar mais dinheiro!",
+    "mensagem": "Arrume um emprego e comece a ganhar ainda mais dinheiro!",
+    "tipoEfeito": "$",
+    "efeito": "x3",
+    "preco": 2000
+  },
+  "casamento": {
+    "mensagem": "Chegou um dos momentos mais esperados da sua vida... o casamento!",
+    "tipoEfeito": ":)",
+    "efeito": "x3",
+    "preco": 2000
+  },
+  "profissional": {
+    "mensagem": "Torne-se um profissional exemplar e se aproxime do topo de sua carreira!",
     "tipoEfeito": "$",
     "efeito": "x2",
-    "preco": 2000
+    "preco": 8000
   }
 }

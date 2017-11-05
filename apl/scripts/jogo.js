@@ -33,21 +33,30 @@ $(function() {
     let $idadeSpanEl = $('#idade-span');
     let $dinheiroSpanEl = $('#dinheiro-span');
 
-    $nomeSpanEl.text(jogador.nome);
-    $idadeSpanEl.text(jogador.idade);
-    $dinheiroSpanEl.text(`R$${jogador.dinheiro}`);
-    $('title').text(jogador.nome + '\'' + (jogador.nome.endsWith('s') ? '' : 's Life'));
-    
+    jogador.atualizaSpansComAtributos();
+    $('title').text(`${jogador.nome}\'${(jogador.nome.endsWith('s') ? '' : 's')} Life`);
+
     // carregamento das imagens dos pertences
     $('#jogador-imagem').attr('src', jogador.imagemSrc);
-    $('#img-cenario').attr('src', `imgs/quarto-${jogador.genero}.png`);
+    let $imgCenarioEl = $('#img-cenario');
+    if (jogador.idade >= 18)
+      $imgCenarioEl.attr('src', 'imgs/background-adulto.png');
+    else
+      $imgCenarioEl.attr('src', `imgs/quarto-${jogador.genero}.png`);
+
     let $cenarioEl = $('#cenario-container');
     for (let nomeProp in todosOsItens) {
       $cenarioEl.append($('<img>').attr('src', `imgs/${nomeProp}.png`));
-      if (jogador.itens.find(jogItem => jogItem.nome === todosOsItens[nomeProp].nome)) {
-        let $imgItemCenarioEl = $(`img[src*="${nomeProp}"]`);
-        $imgItemCenarioEl.animate({ 'opacity': '1' }, 200);
-      }
+      let $imgItemCenarioEl = $(`img[src="imgs/${nomeProp}.png"]`);
+      if (( // condições para mostrar os pertences:
+          jogador.isMaiorDeIdade()
+          && jogador.possuiItem(todosOsItens[nomeProp])
+          && todosOsItens[nomeProp].tipo === FasesDaVida.ADULTO
+        ) || (
+          !jogador.isMaiorDeIdade()
+          && jogador.possuiItem(todosOsItens[nomeProp])
+        )
+      ) $imgItemCenarioEl.animate({ 'opacity': '1' }, 200);
     }
 
     // Clique na imagem do personagem e efeitos:
@@ -55,9 +64,7 @@ $(function() {
       let larguraAtual = (jogador.xp + jogador.limiteXPInicial - jogador.limiteXP)
         * 100 / jogador.limiteXPInicial;
 
-      $('#barra-xp').css({
-        width: `${larguraAtual}%`
-      });
+      $('#barra-xp').css('width', `${larguraAtual}%`);
       $('#jogador-xp').text(`Seu XP: ${jogador.xp}`);
       $('#jogador-limite-xp').text(`Próx. Idade: ${jogador.limiteXP}`);
     }
@@ -92,6 +99,8 @@ $(function() {
     atzBarraXP();
     Item.atualizaItens(jogador);
     Upgrade.atualizaUpgrades(jogador);
+    if (jogador.faseVida !== FasesDaVida.CRIANCA)
+      jogador.atualizaMusicaDeFundo();
 
   }
 
@@ -100,7 +109,7 @@ $(function() {
   if (tempJogador && tempJogador.nome !== null) {
     $('#menu-criacao-conta').hide();
     // para que dê tempo de carregar os arquivos necessários, é preciso esperar um tempo:
-    setTimeout(() => iniciarJogo(), 50);
+    setTimeout(() => iniciarJogo(), 100);
     jogador = tempJogador;
     // ...
   } else {

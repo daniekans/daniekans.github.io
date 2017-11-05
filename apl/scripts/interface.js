@@ -45,7 +45,28 @@ $(function() {
 		$(this).addClass('selecionado');
 	});
 
+	// listeners para a loja e pertences:
+	let $lojaEl = $('#loja');
+	let $pertencesEl = $('#pertences');
+
+	function destaqueAoPassarOMouse(sectionMaiorEl, sectionOcultaEl) {
+		sectionMaiorEl.on('mouseenter', function() {
+			sectionOcultaEl.css('height', '0');
+			sectionMaiorEl.css('height', '90%');
+		});
+		sectionMaiorEl.on('mouseleave', function() {
+			sectionMaiorEl.css('height', '40%');
+			sectionOcultaEl.css('height', '40%');
+		});
+	}
+
+	destaqueAoPassarOMouse($lojaEl, $pertencesEl);
+	destaqueAoPassarOMouse($pertencesEl, $lojaEl);
+
 	// áudios do jogo:
+
+	$('#musica-de-fundo').prop('volume', '0.3');
+
 	$headerEl.on('click', '#icone-audio', function() {
 		let $audiosEl = $('audio');
 
@@ -56,6 +77,21 @@ $(function() {
 			$audiosEl.prop('muted', true);
 			$(this).attr('src', 'imgs/sem-audio.svg');
 		}
+	});
+
+	// screenshot do personagem:
+	$('#li-screenshot').on('click', function() {
+		html2canvas($('#cenario-container')[0], {
+			onrendered: function(canvas) {
+				let imagemURL = canvas.toDataURL(),
+						nomeJogador = $('#nome-span').text(),
+						$linkEl = $('<a></a>')
+							.attr('download', `${nomeJogador}.png`)
+							.attr('href', imagemURL);
+				$('body').append($linkEl);
+				$linkEl[0].click(); // apenas assim é possóvel baixar
+			}
+		});
 	});
 
 });

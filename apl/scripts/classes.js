@@ -19,7 +19,8 @@ const Situacao = {
   NADA: 'Nada', // '-'
   ESTUDANTE: 'Estudante',
   EMPREGADO: 'Empregado',
-  DESEMPREGADO: 'Desempregado'
+  DESEMPREGADO: 'Desempregado',
+  CASADO: 'Casado'
 };
 
 // função para efeito sonoros:
@@ -57,7 +58,7 @@ class Item {
         .text(`Preço: R$${item.preco}`);
       let $btComprarEl = $('<button></button>').text('COMPRAR');
 
-      $itemImgEl.attr('src', ('imgs/' + nomeProp + '.png')); // Ajustar depois
+      $itemImgEl.attr('src', (`imgs/ampliadas/${nomeProp}.png`)); // Ajustar depois
       $itemEl.addClass('item');
       // acréscimos:
       $itemEl.append($itemNomeEl);
@@ -71,19 +72,7 @@ class Item {
         $itemEl.append($btComprarEl);
         $itemEl.append($('<div></div>').addClass('clear'));
 
-        $btComprarEl.on('click', function() {
-          if (jogador.dinheiro >= item.preco) {
-            playSfx('comprado.wav');
-            jogador.adicionaItem(item);
-            jogador.dinheiro -= item.preco;
-            $('#dinheiro-span').text(jogador.dinheiro);
-            let $imgItemCenarioEl = $(`img[src*="${nomeProp}"]`);
-            $imgItemCenarioEl.animate({ 'opacity': '1' }, 200); // fade() não está dando certo
-            Item.atualizaItens(jogador);
-          } else {
-            playSfx('sem-permissao.wav');
-          }
-        });
+        $btComprarEl.on('click', () => jogador.compraItem(item, nomeProp));
 
         $lojaEl.append($itemEl);
       }
@@ -134,13 +123,16 @@ class Jogador {
   aumentaIdade() {
 
     this.idade++;
+
     // configurações para as mudanças de fase da vida:
     switch (this.idade) {
       case 12:
         this.faseVida = FasesDaVida.ADOLESCENTE;
         this.tipoItens = this.faseVida;
         this.incrementoDinheiro = 10;
+        this.limiteXPInicial = 20;
         Item.atualizaItens(this);
+        this.atualizaMusicaDeFundo();
         alert('Você se tornou adolescente!');
         break;
       case 18:
@@ -149,11 +141,19 @@ class Jogador {
         this.situacao = Situacao.DESEMPREGADO;
         this.incrementoDinheiro = 25;
         this.incrementoXP = 2;
-        Item.atualizaItens(this)
+        $('#img-cenario').attr('src', 'imgs/background-adulto.png');
+        for (let nomeProp in todosOsItens) {
+          let $imgItemCenarioEl = $(`img[src="imgs/${nomeProp}.png"]`);
+          $imgItemCenarioEl.animate({ 'opacity': '0' }, 200);
+        }
+        this.compraItem(todosOsItens['casa-aluguel'], 'casa-aluguel');
+        Item.atualizaItens(this);
+        this.atualizaMusicaDeFundo();
         alert('Você se tornou adulto!');
         break;
       case 65:
         this.faseVida = FasesDaVida.IDOSO;
+        this.atualizaMusicaDeFundo();
         alert('Você se tornou idoso!');
         break;
       case 100:
@@ -166,21 +166,12 @@ class Jogador {
     }
 
     // coisas acontecerão de acordo com a sorte do jogador...
-    let fichas;
-    switch (this.faseVida) {
-      case FasesDaVida.CRIANCA:
-      fichas = fichasCrianca;
-      break;
-      case FasesDaVida.ADOLESCENTE:
-      fichas = fichasAdolescente;
-      break;
-      case FasesDaVida.ADULTO:
-      case FasesDaVida.IDOSO:
-      fichas = fichasAdulto;
-      break;
-    }
+    let fichas = {};
+    fichas[FasesDaVida.CRIANCA] = fichasCrianca;
+    fichas[FasesDaVida.ADOLESCENTE] = fichasAdolescente;
+    fichas[FasesDaVida.ADULTO] = fichas[FasesDaVida.IDOSO] = fichasAdulto;
 
-    for (let ficha of fichas)
+    for (let ficha of fichas[this.faseVida])
       if (ficha.testaProbabilidade()) {
         ficha.exibir();
         ficha.aplicaEfeito(this);
@@ -231,11 +222,53 @@ class Jogador {
 
   }
 
+  isMaiorDeIdade() {
+
+    return (this.idade >= 18);
+
+  }
+
+  possuiItem(item) {
+
+    return this.itens.find(jogItem => jogItem.nome === item.nome);
+
+  }
+
   atualizaSpansComAtributos() {
 
     $('#nome-span').text(this.nome);
     $('#idade-span').text(this.idade);
     $('#dinheiro-span').text(`R$${this.dinheiro}`);
+
+  }
+
+  atualizaMusicaDeFundo() {
+
+    let nomeMusica = {};
+
+    nomeMusica[FasesDaVida.CRIANCA] = 'castle-on-the-hill';
+    nomeMusica[FasesDaVida.ADOLESCENTE] = 'sweet-child-o-mine';
+    nomeMusica[FasesDaVida.ADULTO] = '7-years';
+    nomeMusica[FasesDaVida.IDOSO] = 'in-my-life';
+
+    let $musicaFundoEl = $('#musica-de-fundo');
+    $musicaFundoEl.attr('src', `audio/${nomeMusica[this.faseVida]}.mp3`);
+
+  }
+
+  compraItem(item, nomeProp) {
+
+    if (this.dinheiro >= item.preco) {
+      playSfx('comprado.wav');
+      this.adicionaItem(item);
+      this.dinheiro -= item.preco;
+      this.atualizaSpansComAtributos();
+      let $imgItemCenarioEl = $(`img[src="imgs/${nomeProp}.png"]`);
+      $imgItemCenarioEl.animate({ 'opacity': '1' }, 200); // fade() não está dando certo
+      Item.atualizaItens(this);
+    } else {
+      playSfx('sem-permissao.wav');
+    }
 
   }
 
@@ -333,13 +366,11 @@ class Ficha extends EfeitoJogador {
         $efeitoEl = $('<p></p>'),
         $botaoOkEl = $('<button></button>').text('OK'),
         $auxEl = $('#aux'),
-        cor = {
-          color: (this.tipoAcontecimento === 'Azar')
-            ? 'rgb(255, 68, 68)' : 'rgb(12, 199, 14)'
-        };
+        cor = (this.tipoAcontecimento === 'Azar')
+          ? 'rgb(255, 68, 68)' : 'rgb(12, 199, 14)';
 
-    $tituloEl.css(cor);
-    $efeitoEl.css(cor);
+    $tituloEl.css('color', cor);
+    $efeitoEl.css('color', cor);
     $efeitoEl.text(((this.efeito > 0) ? '+' : '') + this.efeito + this.tipoEfeito);
     $botaoOkEl.on('click', function() {
       $('.ficha').remove();
@@ -379,13 +410,22 @@ class Upgrade extends EfeitoJogador {
         jogador.incrementoDinheiro += 1;
         jogador.situacao = Situacao.ESTUDANTE;
         break;
+      case 'ensino-medio':
+        jogador.incrementoDinheiro += 2;
+        break;
       case 'faculdade':
-        jogador.incrementoDinheiro += 10;
-        jogador.situacao = Situacao.ESTUDANTE;
+          jogador.incrementoDinheiro += 10;
+          jogador.situacao = Situacao.ESTUDANTE;
         break;
       case 'emprego':
         jogador.incrementoDinheiro += 200;
         jogador.situacao = Situacao.EMPREGADO;
+        break;
+      case 'profissional':
+          jogador.incrementoDinheiro += 200;
+        break;
+      case 'casamento':
+          jogador.situacao += 'e ' + Situacao.CASADO;
         break;
     }
 
@@ -411,6 +451,7 @@ class Upgrade extends EfeitoJogador {
           jogador.dinheiro -= upgrade.preco;
           jogador.adicionaUpgrade(upgrade);
           jogador.atualizaSpansComAtributos();
+          playSfx('comprado.wav');
           $imgUpgradeEl.fadeOut(400);
           setTimeout(() => $imgUpgradeEl.remove(), 500);
         }
@@ -418,15 +459,24 @@ class Upgrade extends EfeitoJogador {
       let $descricaoEl = $('#descricao-upgrade');
       $imgUpgradeEl.on('mousemove', function(evt) {
         $descricaoEl.css({
-          left: evt.pageX + 20,
+          left: evt.pageX + 20, // um pouco à direita...
+          // fica um pouco acima do ponteiro do mouse:
           top: evt.pageY - parseInt($descricaoEl.css('height')) * 1.2
         });
       });
       $imgUpgradeEl.on('mouseenter', function() {
         $descricaoEl.find('p').text(upgrade.mensagem);
-        $descricaoEl.find('h2').text(nomeUpgrade
-          .replace(nomeUpgrade[0], nomeUpgrade[0] // torna maiúscula a primeira letra
-            .toUpperCase()));
+        /* É muito mais fácil alterar o texto do título não considerando espaços,
+          mas, visando não ter problemas no futuro, fiz da seguinte forma: */
+        let $tituloEl = $descricaoEl.find('h2');
+        let textoTitulo = '';
+        for (let palavra of nomeUpgrade.split('-')) {
+          palavra = palavra.replace(palavra[0], palavra[0].toUpperCase());
+          if (palavra === 'Medio') // coloca acento
+            palavra = palavra.replace('e', 'é');
+          textoTitulo += palavra + ' ';
+        }
+        $tituloEl.text(textoTitulo);
         $descricaoEl.find('.preco-upgrade').text(`R$${upgrade.preco}`);
         $descricaoEl.show();
       });
@@ -509,7 +559,6 @@ $.getJSON('json/fichas.json', function(dados) {
 var todosOsUpgrades = {};
 $.getJSON('json/upgrades.json', function(dados) {
 
-  Object.values(todosOsUpgrades).sort((up1, up2) => (up1.preco - up2.preco));
   for (let nomeUpgrade in dados)
     todosOsUpgrades[nomeUpgrade] = new Upgrade(
       nomeUpgrade,

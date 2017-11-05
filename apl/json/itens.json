@@ -88,5 +88,10 @@
     "nome": "Casa",
     "preco": 100000,
     "tipo": "Adulto"
+  },
+  "casa-aluguel": {
+    "nome": "Casa (alugada)",
+    "preco": 0,
+    "tipo": "Adulto"
   }
 }
