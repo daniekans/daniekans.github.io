@@ -116,9 +116,6 @@ class Jogador {
     if (jog instanceof Object) {
       for (let nomeProp of Object.getOwnPropertyNames(jog))
         if (this.hasOwnProperty(nomeProp))
-          if (nomeProp === 'casa') {
-            jogador.retiraItem(casa-aluguel)
-          }
           this[nomeProp] = jog[nomeProp];
     }
   }
