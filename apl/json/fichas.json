@@ -6,7 +6,7 @@
       "tipoEfeito": ":)",
       "efeito": [10, 10, 10],
       "probabilidade": [
-        [1, 5],
+        [1, 8],
         [1, 20],
         [1, 5000]
       ],
@@ -18,7 +18,7 @@
       "tipoEfeito": ":)",
       "efeito": [10, 10, 10],
       "probabilidade": [
-        [1, 5],
+        [1, 8],
         [1, 20],
         [1, 5000]
       ],
@@ -52,9 +52,9 @@
       "tipoEfeito": ":)",
       "efeito": [-40, -40, -30],
       "probabilidade": [
-        [1, 25000],
-        [1, 20000],
-        [1, 500]
+        [1, 2500],
+        [1, 200],
+        [1, 10]
       ],
       "fase": ["Criança", "Adolescente", "Adulto"]
     },
@@ -64,9 +64,9 @@
       "tipoEfeito": ":)",
       "efeito": [-40, -40, -30],
       "probabilidade": [
-        [1, 25000],
-        [1, 20000],
-        [1, 500]
+        [1, 2500],
+        [1, 200],
+        [1, 10]
       ],
       "fase": ["Criança", "Adolescente", "Adulto"]
     },
@@ -76,9 +76,9 @@
       "tipoEfeito": "x_x",
       "efeito": [0, 0, 0],
       "probabilidade": [
-        [1, 50000],
-        [1, 50000],
-        [1, 20000]
+        [1, 5000],
+        [1, 2000],
+        [1, 200]
       ],
       "fase": ["Criança", "Adolescente", "Adulto"]
     },

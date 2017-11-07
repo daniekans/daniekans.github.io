@@ -116,6 +116,9 @@ class Jogador {
     if (jog instanceof Object) {
       for (let nomeProp of Object.getOwnPropertyNames(jog))
         if (this.hasOwnProperty(nomeProp))
+          if (nomeProp === 'casa') {
+            jogador.retiraItem(casa-aluguel)
+          }
           this[nomeProp] = jog[nomeProp];
     }
   }
@@ -246,9 +249,9 @@ class Jogador {
 
     let nomeMusica = {};
 
-    nomeMusica[FasesDaVida.CRIANCA] = 'castle-on-the-hill';
+    nomeMusica[FasesDaVida.CRIANCA] = '7-years';
     nomeMusica[FasesDaVida.ADOLESCENTE] = 'sweet-child-o-mine';
-    nomeMusica[FasesDaVida.ADULTO] = '7-years';
+    nomeMusica[FasesDaVida.ADULTO] = 'castle-on-the-hill';
     nomeMusica[FasesDaVida.IDOSO] = 'in-my-life';
 
     let $musicaFundoEl = $('#musica-de-fundo');
@@ -265,6 +268,8 @@ class Jogador {
       this.atualizaSpansComAtributos();
       let $imgItemCenarioEl = $(`img[src="imgs/${nomeProp}.png"]`);
       $imgItemCenarioEl.animate({ 'opacity': '1' }, 200); // fade() não está dando certo
+      if (nomeProp === 'casa')
+        jogador.retiraItem(todosOsItens['casa-aluguel']);
       Item.atualizaItens(this);
     } else {
       playSfx('sem-permissao.wav');

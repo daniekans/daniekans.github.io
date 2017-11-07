@@ -36,32 +36,32 @@
   },
   "cachorro": {
     "nome": "Cachorro",
-    "preco": 150,
+    "preco": 75,
     "tipo": "Adolescente"
   },
   "gato": {
     "nome": "Gato",
-    "preco": 150,
+    "preco": 75,
     "tipo": "Adolescente"
   },
   "mp3": {
     "nome": "MP3 Player",
-    "preco": 150,
+    "preco": 100,
     "tipo": "Adolescente"
   },
   "celular": {
     "nome": "Celular",
-    "preco": 500,
+    "preco": 350,
     "tipo": "Adolescente"
   },
   "videogame": {
     "nome": "Video-game",
-    "preco": 700,
+    "preco": 500,
     "tipo": "Adolescente"
   },
   "computador": {
     "nome": "Computador",
-    "preco": 1500,
+    "preco": 750,
     "tipo": "Adolescente"
   },
   "sofa": {

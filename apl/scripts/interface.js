@@ -94,4 +94,18 @@ $(function() {
 		});
 	});
 
+	// instruções do jogo:
+
+	$('#li-instrucoes').on('click', function() {
+		alert("Esse é um jogo que se baseia na vida, logo o único objetivo é viver.");
+		alert("Ao clicar em seu personagem, você faz o tempo passar, ganhando dinheiro, experiência e idade.");
+		alert("No local escrito ''Loja'' você compra objetos que deseja adquirir.");
+		alert("No local com título ''Pertences'' estão os objetos que você comprou em sua vida.");
+		alert("A barra de XP abaixo, indica basicamente o tempo que falta para seu personagem ficar 1 ano mais velho.");
+		alert("No local escrito ''Upgrades'' contém itens que irão deixar suaa vida mais fácil.");
+		alert("Boa sorte.");
+	});
+
 });
+
+
