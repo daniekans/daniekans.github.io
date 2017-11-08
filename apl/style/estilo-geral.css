@@ -123,7 +123,7 @@ main h2 {
 #cenario-container #img-cenario {
 	width: 100%;
 	height: 100%;
-	image-rendering: pixelated;
+	z-index: 1;
 }
 
 #tela-jogo img {
@@ -151,6 +151,11 @@ main h2 {
   max-height: 100%;
   opacity: 0;
   pointer-events: none;
+	z-index: 1;
+}
+
+#cenario-container img[src="imgs/casa-aluguel.png"] {
+	z-index: 0 !important;
 }
 
 /*--- barra de XP --- */

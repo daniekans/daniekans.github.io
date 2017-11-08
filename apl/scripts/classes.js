@@ -3,7 +3,10 @@
  * Versão 2 – Sem teste
  */
 
-/* Este arquivo possui as classes e variáveis que darão a base para o jogo */
+/* Este arquivo possui as classes e variáveis que darão a base para o jogo.
+ * A utilização de classes não ficou totalmente correta, porque esta é a
+ * primeira vez que eu (Daniel) faço isto, mas retornou um bom resultado.
+ */
 
  // Tentativa de criar uma enumeração no JS...
  const FasesDaVida = { // primeira letra maiúscula por agir como uma enum
@@ -52,10 +55,13 @@ class Item {
       let nomeProp = parItem[0];
       let item = parItem[1];
       let $itemEl = $('<div></div>');
-      let $itemImgEl = $('<img>');
+      let $itemImgEl = $('<img />');
       let $itemNomeEl = $('<h3></h3>').text(item.nome);
       let $itemPrecoEl = $('<span></span>')
-        .text(`Preço: R$${item.preco}`);
+        .text(`Preço: R$${item.preco}`); /* Utilizei várias vezes esta forma
+        de concatenar as variáveis nas strings por ficar, para mim, mais visível
+        o resultado. Entretanto, não sei se este é o uso apropriado. */
+
       let $btComprarEl = $('<button></button>').text('COMPRAR');
 
       $itemImgEl.attr('src', (`imgs/ampliadas/${nomeProp}.png`)); // Ajustar depois
@@ -206,13 +212,19 @@ class Jogador {
   }
 
   retiraItem(item) {
-    // -> usar depois o método find() para arrays
+
     if (item instanceof Item)
       for (let i = 0; i < this.itens.length; i++) {
         let temp = this.itens[i];
-        if (temp.nome === item.nome && temp.preco === item.preco)
+        if (temp.nome === item.nome) {
             this.itens.splice(i, 1);
+            for (let nomeProp in todosOsItens)
+              if (todosOsItens[nomeProp] === item)
+                $(`img[src="imgs/${nomeProp}.png"]`)
+                  .css('opacity', '0');
+        }
       }
+
   }
 
   adicionaUpgrade(upgrade) {
@@ -246,6 +258,7 @@ class Jogador {
 
     let nomeMusica = {};
 
+    // um pouquinho mais curto que um switch:
     nomeMusica[FasesDaVida.CRIANCA] = '7-years';
     nomeMusica[FasesDaVida.ADOLESCENTE] = 'sweet-child-o-mine';
     nomeMusica[FasesDaVida.ADULTO] = 'castle-on-the-hill';
@@ -264,9 +277,9 @@ class Jogador {
       this.dinheiro -= item.preco;
       this.atualizaSpansComAtributos();
       let $imgItemCenarioEl = $(`img[src="imgs/${nomeProp}.png"]`);
-      $imgItemCenarioEl.animate({ 'opacity': '1' }, 200); // fade() não está dando certo
+      $imgItemCenarioEl.animate({ 'opacity': '1' }, 200); // fade() não está dando certo...
       if (nomeProp === 'casa')
-        jogador.retiraItem(todosOsItens['casa-aluguel']);
+        this.retiraItem(todosOsItens['casa-aluguel']);
       Item.atualizaItens(this);
     } else {
       playSfx('sem-permissao.wav');
@@ -281,20 +294,18 @@ class EfeitoJogador {
   constructor(mensagem = '', tipoEfeito = '', efeito = null) {
     this.mensagem = mensagem;
     this.tipoEfeito = tipoEfeito;
-    // efeito é a quntidade de dinheiro retirado ou a função executada de acordo com o 'comando' da ficha:
     this.efeito = efeito;
   }
 
   aplicaEfeito(jogador) {
 
-     /* Foi necessário atribuir o 'this' mais externo a uma variável.
-        A função de seta não funcionaria muito bem aqui... */
-    let self = this;
-    function modificaProp(propriedade) {
-        if (String(self.efeito).startsWith('x'))
-          jogador[propriedade] *= parseInt(self.efeito.replace('x', ''));
-        else
-          jogador[propriedade] += parseInt(self.efeito);
+     /* Foi necessário utilizar uma função de seta para capturar o 'this'
+        mais "externo" (pertencente à classe EfeitoJogador): */
+    let modificaProp = (propriedade) => {
+      if (String(this.efeito).startsWith('x'))
+        jogador[propriedade] *= parseInt(this.efeito.replace('x', ''));
+      else
+        jogador[propriedade] += parseInt(this.efeito);
     }
 
     switch (this.tipoEfeito) {
@@ -442,7 +453,7 @@ class Upgrade extends EfeitoJogador {
 
       let nomeUpgrade = parUpgrade[0];
       let upgrade = parUpgrade[1];
-      let $imgUpgradeEl = $('<img>');
+      let $imgUpgradeEl = $('<img />');
 
       $imgUpgradeEl.addClass('upgrade');
       $imgUpgradeEl.attr('src', `imgs/${nomeUpgrade}.png`);
@@ -467,7 +478,8 @@ class Upgrade extends EfeitoJogador {
         });
       });
       $imgUpgradeEl.on('mouseenter', function() {
-        $descricaoEl.find('p').text(upgrade.mensagem);
+        $descricaoEl.find('p')
+          .text(`[${upgrade.tipoEfeito}${upgrade.efeito}] ${upgrade.mensagem}`);
         /* É muito mais fácil alterar o texto do título não considerando espaços,
           mas, visando não ter problemas no futuro, fiz da seguinte forma: */
         let $tituloEl = $descricaoEl.find('h2');
@@ -496,7 +508,10 @@ class Upgrade extends EfeitoJogador {
 
 }
 
-/* Outras declarações: */
+/* Outras declarações (como não queria que elas ficassem antes das definições das
+ * classes e as seguintes variáveis dependem delas, tive que declará-las utilizando
+ * 'var' no mesmo arquivo).
+ */
 
 // criação dos itens:
 var todosOsItens = {};
@@ -521,25 +536,20 @@ $.getJSON('json/fichas.json', function(dados) {
     if (ficha.fase instanceof Array)
       for (let i = 0; i < ficha.fase.length; i++)
         todasAsFichas.push(new Ficha(
-          ficha.mensagem,
-          ficha.tipoAcontecimento,
-          ficha.tipoEfeito,
-          ficha.efeito[i],
-          ficha.probabilidade[i],
-          ficha.fase[i]
+          ficha.mensagem, ficha.tipoAcontecimento,
+          ficha.tipoEfeito, ficha.efeito[i],
+          ficha.probabilidade[i], ficha.fase[i]
         ));
     else
       todasAsFichas.push(new Ficha(
-        ficha.mensagem,
-        ficha.tipoAcontecimento,
-        ficha.tipoEfeito,
-        ficha.efeito,
-        ficha.probabilidade,
-        ficha.fase
+        ficha.mensagem, ficha.tipoAcontecimento,
+        ficha.tipoEfeito, ficha.efeito,
+        ficha.probabilidade, ficha.fase
       ));
 
   }
 
+  // distribui todas as fichas de acordo com a fase da vida:
   for (let ficha of todasAsFichas) {
     switch (ficha.fase) {
       case FasesDaVida.CRIANCA:

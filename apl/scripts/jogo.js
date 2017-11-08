@@ -44,11 +44,12 @@ $(function() {
     else
       $imgCenarioEl.attr('src', `imgs/quarto-${jogador.genero}.png`);
 
+    // colocamento das imagens no cenário:
     let $cenarioEl = $('#cenario-container');
     for (let nomeProp in todosOsItens) {
-      $cenarioEl.append($('<img>').attr('src', `imgs/${nomeProp}.png`));
-      let $imgItemCenarioEl = $(`img[src="imgs/${nomeProp}.png"]`);
-      if (( // condições para mostrar os pertences:
+      let $imgItemCenarioEl = $('<img />').attr('src', `imgs/${nomeProp}.png`);
+      $cenarioEl.append($imgItemCenarioEl);
+      if (( // condições para mostrar os pertences (está meio bizarro...):
           jogador.isMaiorDeIdade()
           && jogador.possuiItem(todosOsItens[nomeProp])
           && todosOsItens[nomeProp].tipo === FasesDaVida.ADULTO
@@ -59,7 +60,7 @@ $(function() {
       ) $imgItemCenarioEl.animate({ 'opacity': '1' }, 200);
     }
 
-    // Clique na imagem do personagem e efeitos:
+    // clique na imagem do personagem e a barra de XP:
     function atzBarraXP() {
       let larguraAtual = (jogador.xp + jogador.limiteXPInicial - jogador.limiteXP)
         * 100 / jogador.limiteXPInicial;

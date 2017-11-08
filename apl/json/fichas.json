@@ -74,7 +74,7 @@
       "mensagem": "Você morreu.",
       "tipoAcontecimento": "Azar",
       "tipoEfeito": "x_x",
-      "efeito": [0, 0, 0],
+      "efeito": ["", "", ""],
       "probabilidade": [
         [1, 5000],
         [1, 2000],
